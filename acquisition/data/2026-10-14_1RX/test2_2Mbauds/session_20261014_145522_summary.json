@@ -1,0 +1,19 @@
+{
+  "frames": 2723,
+  "duration_s": 29.99,
+  "mean_fps": 90.8,
+  "lost": 7,
+  "loss_pct": 0.26,
+  "duplicates": 0,
+  "reordered": 0,
+  "bad_lines": 0,
+  "interval_mean_ms": 11.02,
+  "interval_p95_ms": 14.06,
+  "interval_max_ms": 27.2,
+  "source": "serial:COM5@2000000",
+  "file": "data\\session_20261014_145522.txt",
+  "note": "test 2 - 2 Mbauds",
+  "rssi_mean_dbm": -26.1,
+  "subcarriers": 192,
+  "date": "20261014_145522"
+}

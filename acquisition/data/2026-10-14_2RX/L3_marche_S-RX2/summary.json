@@ -1,0 +1,49 @@
+{
+  "source": "serial COM5:RX1 COM6:RX2 @2000000",
+  "dir": "data/2026-10-14_2RX/L3_marche_S-RX2",
+  "note": "L3 - marche entre S et RX2",
+  "date": "20261014_160427",
+  "receivers": {
+    "RX1": {
+      "frames": 2680,
+      "duration_s": 29.98,
+      "mean_fps": 89.4,
+      "lost": 49,
+      "loss_pct": 1.8,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 11.19,
+      "interval_p95_ms": 13.09,
+      "interval_max_ms": 50.86,
+      "rssi_mean_dbm": -41.6
+    },
+    "RX2": {
+      "frames": 2697,
+      "duration_s": 29.97,
+      "mean_fps": 90.0,
+      "lost": 32,
+      "loss_pct": 1.17,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 11.12,
+      "interval_p95_ms": 12.78,
+      "interval_max_ms": 49.86,
+      "rssi_mean_dbm": -48.0
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2"
+    ],
+    "ids_common_to_all": 2660,
+    "ids_emitted_in_common_window": 2729,
+    "common_pct_of_emitted": 97.47,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 1.51
+    }
+  }
+}

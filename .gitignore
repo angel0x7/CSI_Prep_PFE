@@ -1,2 +1,13 @@
 .venv
 .git
+
+# --- acquisition (systemes embarques) ---
+__pycache__/
+venv/
+# firmwares ESP-IDF : fichiers generes
+build/
+managed_components/
+sdkconfig
+sdkconfig.old
+# enregistrements bruts (.txt, lourds) : seuls les CSV sont versionnes
+acquisition/data/**/*.txt

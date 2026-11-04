@@ -1,0 +1,19 @@
+{
+  "frames": 5372,
+  "duration_s": 59.98,
+  "mean_fps": 89.6,
+  "lost": 87,
+  "loss_pct": 1.59,
+  "duplicates": 0,
+  "reordered": 0,
+  "bad_lines": 0,
+  "interval_mean_ms": 11.17,
+  "interval_p95_ms": 13.91,
+  "interval_max_ms": 44.31,
+  "source": "serial:COM5@2000000",
+  "file": "data\\session_20261014_152522.txt",
+  "note": "test2.2",
+  "rssi_mean_dbm": -48.2,
+  "subcarriers": 192,
+  "date": "20261014_152522"
+}

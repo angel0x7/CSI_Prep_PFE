@@ -1,0 +1,49 @@
+{
+  "source": "serial COM5:RX1 COM6:RX2 @2000000",
+  "dir": "data/2026-10-21_soutenance_inter/jury/D2_allers_retours",
+  "note": "Demo 2 : mouvement, allers-retours entre les capteurs",
+  "date": "20261021_145734",
+  "receivers": {
+    "RX1": {
+      "frames": 5439,
+      "duration_s": 59.95,
+      "mean_fps": 90.7,
+      "lost": 19,
+      "loss_pct": 0.35,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 3,
+      "interval_mean_ms": 11.02,
+      "interval_p95_ms": 31.89,
+      "interval_max_ms": 96.72,
+      "rssi_mean_dbm": -41.8
+    },
+    "RX2": {
+      "frames": 5071,
+      "duration_s": 59.95,
+      "mean_fps": 84.6,
+      "lost": 387,
+      "loss_pct": 7.09,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 1,
+      "interval_mean_ms": 11.82,
+      "interval_p95_ms": 32.06,
+      "interval_max_ms": 96.72,
+      "rssi_mean_dbm": -52.4
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2"
+    ],
+    "ids_common_to_all": 5059,
+    "ids_emitted_in_common_window": 5458,
+    "common_pct_of_emitted": 92.69,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 14.91
+    }
+  }
+}

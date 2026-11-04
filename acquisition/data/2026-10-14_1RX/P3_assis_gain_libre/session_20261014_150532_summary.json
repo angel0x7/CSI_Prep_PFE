@@ -1,0 +1,19 @@
+{
+  "frames": 5234,
+  "duration_s": 59.98,
+  "mean_fps": 87.3,
+  "lost": 225,
+  "loss_pct": 4.12,
+  "duplicates": 0,
+  "reordered": 0,
+  "bad_lines": 0,
+  "interval_mean_ms": 11.46,
+  "interval_p95_ms": 14.77,
+  "interval_max_ms": 44.95,
+  "source": "serial:COM5@2000000",
+  "file": "data\\session_20261014_150532.txt",
+  "note": "P3 - assis immobile entre A et B",
+  "rssi_mean_dbm": -32.6,
+  "subcarriers": 192,
+  "date": "20261014_150532"
+}

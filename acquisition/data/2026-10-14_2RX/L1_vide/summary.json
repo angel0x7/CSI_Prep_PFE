@@ -1,0 +1,49 @@
+{
+  "source": "serial COM5:RX1 COM6:RX2 @2000000",
+  "dir": "data/2026-10-14_2RX/L1_vide",
+  "note": "L1 - piece vide",
+  "date": "20261014_160314",
+  "receivers": {
+    "RX1": {
+      "frames": 2691,
+      "duration_s": 29.98,
+      "mean_fps": 89.8,
+      "lost": 38,
+      "loss_pct": 1.39,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 11.14,
+      "interval_p95_ms": 13.04,
+      "interval_max_ms": 34.27,
+      "rssi_mean_dbm": -41.8
+    },
+    "RX2": {
+      "frames": 2699,
+      "duration_s": 29.98,
+      "mean_fps": 90.0,
+      "lost": 30,
+      "loss_pct": 1.1,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 11.11,
+      "interval_p95_ms": 12.79,
+      "interval_max_ms": 23.37,
+      "rssi_mean_dbm": -47.3
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2"
+    ],
+    "ids_common_to_all": 2663,
+    "ids_emitted_in_common_window": 2729,
+    "common_pct_of_emitted": 97.58,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 1.51
+    }
+  }
+}

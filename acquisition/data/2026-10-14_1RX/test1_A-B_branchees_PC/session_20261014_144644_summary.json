@@ -1,0 +1,19 @@
+{
+  "frames": 2155,
+  "duration_s": 29.98,
+  "mean_fps": 71.9,
+  "lost": 574,
+  "loss_pct": 21.03,
+  "duplicates": 0,
+  "reordered": 0,
+  "bad_lines": 1,
+  "interval_mean_ms": 13.92,
+  "interval_p95_ms": 15.77,
+  "interval_max_ms": 34.87,
+  "source": "serial:COM5@921600",
+  "file": "data\\session_20261014_144644.txt",
+  "note": "test 1 - A et B branchees au PC",
+  "rssi_mean_dbm": -33.7,
+  "subcarriers": 192,
+  "date": "20261014_144644"
+}

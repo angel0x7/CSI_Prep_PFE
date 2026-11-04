@@ -1,0 +1,19 @@
+{
+  "frames": 5306,
+  "duration_s": 59.98,
+  "mean_fps": 88.5,
+  "lost": 153,
+  "loss_pct": 2.8,
+  "duplicates": 0,
+  "reordered": 0,
+  "bad_lines": 0,
+  "interval_mean_ms": 11.31,
+  "interval_p95_ms": 14.68,
+  "interval_max_ms": 48.91,
+  "source": "serial:COM5@2000000",
+  "file": "data\\session_20261014_150227.txt",
+  "note": "P1 - piece vide, A-B 3 m",
+  "rssi_mean_dbm": -31.0,
+  "subcarriers": 192,
+  "date": "20261014_150227"
+}
