@@ -1,0 +1,68 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3",
+  "dir": "data/2026-11-04_3RX_UDP/test_transport_30s",
+  "note": "3 RX sans fil, AP et S au centre",
+  "date": "20261104_163946",
+  "receivers": {
+    "RX1": {
+      "frames": 2323,
+      "duration_s": 29.8,
+      "mean_fps": 78.0,
+      "lost": 401,
+      "loss_pct": 14.72,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 12.83,
+      "interval_p95_ms": 32.12,
+      "interval_max_ms": 1055.47,
+      "rssi_mean_dbm": -54.5
+    },
+    "RX2": {
+      "frames": 2708,
+      "duration_s": 29.98,
+      "mean_fps": 90.3,
+      "lost": 17,
+      "loss_pct": 0.62,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 11.07,
+      "interval_p95_ms": 31.57,
+      "interval_max_ms": 35.26,
+      "rssi_mean_dbm": -58.9
+    },
+    "RX3": {
+      "frames": 2712,
+      "duration_s": 29.93,
+      "mean_fps": 90.6,
+      "lost": 12,
+      "loss_pct": 0.44,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 11.04,
+      "interval_p95_ms": 31.82,
+      "interval_max_ms": 128.76,
+      "rssi_mean_dbm": -47.0
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3"
+    ],
+    "ids_common_to_all": 2311,
+    "ids_emitted_in_common_window": 2724,
+    "common_pct_of_emitted": 84.84,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 580.05
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 559.25
+    }
+  }
+}

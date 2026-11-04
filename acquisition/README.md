@@ -59,6 +59,7 @@ timestamp_ms, v0, v1, ..., v127
 | `2026-10-14_1RX` | 1 récepteur, liaison série | essais techniques, puis vide / marche / assis, avec gain libre (P1–P3) et gain figé (T2.1–T2.3) |
 | `2026-10-14_2RX` | 2 récepteurs, S au centre | L1 vide, L2 marche entre S et RX1, L3 marche entre S et RX2, L1bis vide |
 | `2026-10-21_soutenance_inter` | 2 récepteurs | D1 personne immobile, D2 allers-retours (60 s), passage devant le jury + répétition |
+| `2026-11-04_3RX_UDP` | **3 récepteurs sans fil (UDP)**, S et point d'accès au centre, RX1–RX3 éloignés dans la pièce | `test_transport_30s`, `vide` (début perturbé), `vide_sortie_15s` (pièce vraiment vide : référence), `marche_allers-retours` (60 s chacune) |
 
 Pour les prochaines campagnes (4 RX en UDP), une session = **une activité, un sujet, environ 20 s**. Le nom suit les codes du dataset : `FA` chute, `GU` se lever, `LD` s'allonger, `SD` s'asseoir, `WA` marcher (+ `EMPTY` pièce vide).
 
