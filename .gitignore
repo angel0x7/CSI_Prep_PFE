@@ -1,5 +1,6 @@
 .venv
 .git
+<<<<<<< HEAD
 
 # --- acquisition (systemes embarques) ---
 __pycache__/
@@ -11,3 +12,7 @@ sdkconfig
 sdkconfig.old
 # enregistrements bruts (.txt, lourds) : seuls les CSV sont versionnes
 acquisition/data/**/*.txt
+=======
+/csi_clean 
+/out_custom
+>>>>>>> a347b1b (change .gitignore)
