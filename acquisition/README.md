@@ -13,6 +13,7 @@ acquisition/
 ├── python/              enregistrement et export
 │   ├── record_multi.py  enregistre N récepteurs (--udp ou --serial) et exporte les CSV
 │   ├── export_csv.py    convertit des sessions brutes (.txt) en CSV au format de l'équipe IA
+│   ├── enregistrer_dataset.ps1, indexer_dataset.py   prises du dataset en boucle + index.csv
 │   ├── record_csi.py, analyze_session.py, compare_sessions.py, simulate_esp32.py
 │   ├── wisee_csi/       parser des lignes CSI_DATA, métriques, modèle de canal du simulateur
 │   └── tests/
@@ -60,8 +61,9 @@ timestamp_ms, v0, v1, ..., v127
 | `2026-10-14_2RX` | 2 récepteurs, S au centre | L1 vide, L2 marche entre S et RX1, L3 marche entre S et RX2, L1bis vide |
 | `2026-10-21_soutenance_inter` | 2 récepteurs | D1 personne immobile, D2 allers-retours (60 s), passage devant le jury + répétition |
 | `2026-11-04_3RX_UDP` | **3 récepteurs sans fil (UDP)**, S et point d'accès au centre, RX1–RX3 éloignés dans la pièce | `test_transport_30s`, `vide` (début perturbé), `vide_sortie_15s` (pièce vraiment vide : référence), `marche_allers-retours` (60 s chacune) |
+| **`DATASET`** | **4 récepteurs en UDP** | **campagne du 10/11 : 294 prises de 8 s rangées en `<activité>/p<nombre de personnes>/prise_NNN` (chute, assis, debout, marche, vide ; 1 à 5 personnes). Pertes Wi-Fi élevées (11-96 %) : lire `data/DATASET/README.md` et la colonne `qualite` de `index.csv` avant usage.** |
 
-Pour les prochaines campagnes (4 RX en UDP), une session = **une activité, un sujet, environ 20 s**. Le nom suit les codes du dataset : `FA` chute, `GU` se lever, `LD` s'allonger, `SD` s'asseoir, `WA` marcher (+ `EMPTY` pièce vide).
+Pour les prochaines campagnes, on garde la convention du `DATASET` : `<activité>/p<nombre de personnes>/prise_NNN`, prises enregistrées en boucle avec `python/enregistrer_dataset.ps1`, puis `python/indexer_dataset.py` pour regénérer `index.csv`.
 
 ## Installation Python
 

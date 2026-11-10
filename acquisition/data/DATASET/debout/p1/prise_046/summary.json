@@ -1,0 +1,88 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/debout/p1/prise_046",
+  "note": "debout sujet 1 debout_046",
+  "date": "20261110_124636",
+  "receivers": {
+    "RX1": {
+      "frames": 300,
+      "duration_s": 7.97,
+      "mean_fps": 37.7,
+      "lost": 436,
+      "loss_pct": 59.24,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 26.65,
+      "interval_p95_ms": 85.38,
+      "interval_max_ms": 189.33,
+      "rssi_mean_dbm": -64.9
+    },
+    "RX2": {
+      "frames": 479,
+      "duration_s": 7.94,
+      "mean_fps": 60.3,
+      "lost": 257,
+      "loss_pct": 34.92,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 16.61,
+      "interval_p95_ms": 64.13,
+      "interval_max_ms": 190.31,
+      "rssi_mean_dbm": -58.2
+    },
+    "RX3": {
+      "frames": 469,
+      "duration_s": 7.94,
+      "mean_fps": 59.0,
+      "lost": 267,
+      "loss_pct": 36.28,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 16.97,
+      "interval_p95_ms": 64.07,
+      "interval_max_ms": 147.92,
+      "rssi_mean_dbm": -56.1
+    },
+    "RX4": {
+      "frames": 393,
+      "duration_s": 7.91,
+      "mean_fps": 49.7,
+      "lost": 341,
+      "loss_pct": 46.46,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 20.18,
+      "interval_p95_ms": 68.75,
+      "interval_max_ms": 206.43,
+      "rssi_mean_dbm": -59.9
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3",
+      "RX4"
+    ],
+    "ids_common_to_all": 237,
+    "ids_emitted_in_common_window": 734,
+    "common_pct_of_emitted": 32.29,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 46.22
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 47.63
+    },
+    "pc_delay_ms_RX4_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 37.63
+    }
+  },
+  "ancien_chemin": "data/DATASET/debout/s01/debout_046"
+}

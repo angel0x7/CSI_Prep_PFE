@@ -1,0 +1,88 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/vide/p0/prise_002",
+  "note": "EMPTY s00 essai_02",
+  "date": "20261110_113154",
+  "receivers": {
+    "RX1": {
+      "frames": 1145,
+      "duration_s": 19.7,
+      "mean_fps": 58.1,
+      "lost": 641,
+      "loss_pct": 35.89,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 17.22,
+      "interval_p95_ms": 68.18,
+      "interval_max_ms": 497.86,
+      "rssi_mean_dbm": -59.4
+    },
+    "RX2": {
+      "frames": 1272,
+      "duration_s": 19.7,
+      "mean_fps": 64.6,
+      "lost": 515,
+      "loss_pct": 28.82,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 15.5,
+      "interval_p95_ms": 58.45,
+      "interval_max_ms": 503.43,
+      "rssi_mean_dbm": -52.2
+    },
+    "RX3": {
+      "frames": 1199,
+      "duration_s": 19.65,
+      "mean_fps": 61.0,
+      "lost": 588,
+      "loss_pct": 32.9,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 16.4,
+      "interval_p95_ms": 63.85,
+      "interval_max_ms": 503.43,
+      "rssi_mean_dbm": -59.0
+    },
+    "RX4": {
+      "frames": 68,
+      "duration_s": 19.68,
+      "mean_fps": 3.5,
+      "lost": 1736,
+      "loss_pct": 96.23,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 293.8,
+      "interval_p95_ms": 1031.08,
+      "interval_max_ms": 1387.71,
+      "rssi_mean_dbm": -61.3
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3",
+      "RX4"
+    ],
+    "ids_common_to_all": 56,
+    "ids_emitted_in_common_window": 1784,
+    "common_pct_of_emitted": 3.14,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 69.72
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 110.47
+    },
+    "pc_delay_ms_RX4_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 95.35
+    }
+  },
+  "ancien_chemin": "data/DATASET/EMPTY/s00/essai_02"
+}

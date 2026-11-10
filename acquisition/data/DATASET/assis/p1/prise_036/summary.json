@@ -1,0 +1,88 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/assis/p1/prise_036",
+  "note": "assis sujet 1 assis_036",
+  "date": "20261110_122324",
+  "receivers": {
+    "RX1": {
+      "frames": 447,
+      "duration_s": 7.92,
+      "mean_fps": 56.4,
+      "lost": 281,
+      "loss_pct": 38.6,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 17.77,
+      "interval_p95_ms": 62.21,
+      "interval_max_ms": 207.12,
+      "rssi_mean_dbm": -66.4
+    },
+    "RX2": {
+      "frames": 499,
+      "duration_s": 7.93,
+      "mean_fps": 62.9,
+      "lost": 228,
+      "loss_pct": 31.36,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 15.92,
+      "interval_p95_ms": 58.24,
+      "interval_max_ms": 159.57,
+      "rssi_mean_dbm": -55.0
+    },
+    "RX3": {
+      "frames": 510,
+      "duration_s": 7.99,
+      "mean_fps": 63.8,
+      "lost": 218,
+      "loss_pct": 29.95,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 15.7,
+      "interval_p95_ms": 55.11,
+      "interval_max_ms": 177.19,
+      "rssi_mean_dbm": -59.7
+    },
+    "RX4": {
+      "frames": 505,
+      "duration_s": 7.91,
+      "mean_fps": 63.9,
+      "lost": 222,
+      "loss_pct": 30.54,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 15.69,
+      "interval_p95_ms": 51.92,
+      "interval_max_ms": 160.82,
+      "rssi_mean_dbm": -59.8
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3",
+      "RX4"
+    ],
+    "ids_common_to_all": 325,
+    "ids_emitted_in_common_window": 724,
+    "common_pct_of_emitted": 44.89,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 9.72,
+      "p95_abs": 98.04
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 31.65
+    },
+    "pc_delay_ms_RX4_vs_RX1": {
+      "median": 15.8,
+      "p95_abs": 110.48
+    }
+  },
+  "ancien_chemin": "data/DATASET/assis/s01/assis_036"
+}

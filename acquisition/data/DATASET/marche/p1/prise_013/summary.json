@@ -1,0 +1,88 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/marche/p1/prise_013",
+  "note": "marche 13 personnes prise_013",
+  "date": "20261110_133823",
+  "receivers": {
+    "RX1": {
+      "frames": 599,
+      "duration_s": 7.96,
+      "mean_fps": 75.2,
+      "lost": 121,
+      "loss_pct": 16.81,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 13.32,
+      "interval_p95_ms": 57.65,
+      "interval_max_ms": 258.05,
+      "rssi_mean_dbm": -50.3
+    },
+    "RX2": {
+      "frames": 599,
+      "duration_s": 7.99,
+      "mean_fps": 75.0,
+      "lost": 131,
+      "loss_pct": 17.95,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 13.35,
+      "interval_p95_ms": 48.26,
+      "interval_max_ms": 160.55,
+      "rssi_mean_dbm": -61.2
+    },
+    "RX3": {
+      "frames": 623,
+      "duration_s": 7.94,
+      "mean_fps": 78.5,
+      "lost": 106,
+      "loss_pct": 14.54,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 12.76,
+      "interval_p95_ms": 53.28,
+      "interval_max_ms": 128.27,
+      "rssi_mean_dbm": -51.4
+    },
+    "RX4": {
+      "frames": 561,
+      "duration_s": 7.97,
+      "mean_fps": 70.4,
+      "lost": 168,
+      "loss_pct": 23.05,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 14.23,
+      "interval_p95_ms": 50.62,
+      "interval_max_ms": 211.93,
+      "rssi_mean_dbm": -61.3
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3",
+      "RX4"
+    ],
+    "ids_common_to_all": 495,
+    "ids_emitted_in_common_window": 719,
+    "common_pct_of_emitted": 68.85,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": -8.92,
+      "p95_abs": 119.7
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": -5.79,
+      "p95_abs": 128.75
+    },
+    "pc_delay_ms_RX4_vs_RX1": {
+      "median": -5.33,
+      "p95_abs": 124.76
+    }
+  },
+  "ancien_chemin": "data/DATASET/marche_plusieurs/p1/prise_013"
+}

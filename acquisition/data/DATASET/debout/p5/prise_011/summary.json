@@ -1,0 +1,88 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/debout/p5/prise_011",
+  "note": "immobile 11 personnes prise_011",
+  "date": "20261110_131800",
+  "receivers": {
+    "RX1": {
+      "frames": 136,
+      "duration_s": 7.71,
+      "mean_fps": 17.6,
+      "lost": 602,
+      "loss_pct": 81.57,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 57.08,
+      "interval_p95_ms": 178.2,
+      "interval_max_ms": 674.11,
+      "rssi_mean_dbm": -54.3
+    },
+    "RX2": {
+      "frames": 118,
+      "duration_s": 7.85,
+      "mean_fps": 15.0,
+      "lost": 703,
+      "loss_pct": 85.63,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 67.08,
+      "interval_p95_ms": 240.43,
+      "interval_max_ms": 950.25,
+      "rssi_mean_dbm": -58.9
+    },
+    "RX3": {
+      "frames": 176,
+      "duration_s": 8.03,
+      "mean_fps": 21.9,
+      "lost": 582,
+      "loss_pct": 76.78,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 45.87,
+      "interval_p95_ms": 150.03,
+      "interval_max_ms": 457.9,
+      "rssi_mean_dbm": -53.1
+    },
+    "RX4": {
+      "frames": 54,
+      "duration_s": 7.26,
+      "mean_fps": 7.4,
+      "lost": 662,
+      "loss_pct": 92.46,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 136.95,
+      "interval_p95_ms": 354.25,
+      "interval_max_ms": 1456.72,
+      "rssi_mean_dbm": -62.3
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3",
+      "RX4"
+    ],
+    "ids_common_to_all": 2,
+    "ids_emitted_in_common_window": 630,
+    "common_pct_of_emitted": 0.32,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": -129.17,
+      "p95_abs": 245.41
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": -312.66,
+      "p95_abs": 508.82
+    },
+    "pc_delay_ms_RX4_vs_RX1": {
+      "median": 764.1,
+      "p95_abs": 843.04
+    }
+  },
+  "ancien_chemin": "data/DATASET/immobile_plusieurs/p5/prise_011"
+}

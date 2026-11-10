@@ -1,0 +1,88 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/chute/p1/prise_002",
+  "note": "chute sujet 1 chute_004",
+  "date": "20261110_114227",
+  "receivers": {
+    "RX1": {
+      "frames": 456,
+      "duration_s": 7.92,
+      "mean_fps": 57.6,
+      "lost": 277,
+      "loss_pct": 37.79,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 17.41,
+      "interval_p95_ms": 62.75,
+      "interval_max_ms": 198.12,
+      "rssi_mean_dbm": -61.0
+    },
+    "RX2": {
+      "frames": 482,
+      "duration_s": 7.95,
+      "mean_fps": 60.6,
+      "lost": 253,
+      "loss_pct": 34.42,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 16.54,
+      "interval_p95_ms": 62.39,
+      "interval_max_ms": 165.09,
+      "rssi_mean_dbm": -51.0
+    },
+    "RX3": {
+      "frames": 468,
+      "duration_s": 7.95,
+      "mean_fps": 58.8,
+      "lost": 266,
+      "loss_pct": 36.24,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 17.03,
+      "interval_p95_ms": 58.79,
+      "interval_max_ms": 140.72,
+      "rssi_mean_dbm": -59.2
+    },
+    "RX4": {
+      "frames": 414,
+      "duration_s": 7.92,
+      "mean_fps": 52.3,
+      "lost": 320,
+      "loss_pct": 43.6,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 19.18,
+      "interval_p95_ms": 64.33,
+      "interval_max_ms": 198.05,
+      "rssi_mean_dbm": -67.1
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3",
+      "RX4"
+    ],
+    "ids_common_to_all": 321,
+    "ids_emitted_in_common_window": 731,
+    "common_pct_of_emitted": 43.91,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 44.54
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 33.6
+    },
+    "pc_delay_ms_RX4_vs_RX1": {
+      "median": 7.66,
+      "p95_abs": 60.63
+    }
+  },
+  "ancien_chemin": "data/DATASET/chutes/s01/chute_004"
+}

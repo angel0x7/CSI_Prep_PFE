@@ -1,0 +1,88 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/debout/p5/prise_003",
+  "note": "immobile 3 personnes prise_003",
+  "date": "20261110_131551",
+  "receivers": {
+    "RX1": {
+      "frames": 657,
+      "duration_s": 7.97,
+      "mean_fps": 82.4,
+      "lost": 67,
+      "loss_pct": 9.25,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 12.15,
+      "interval_p95_ms": 47.43,
+      "interval_max_ms": 113.48,
+      "rssi_mean_dbm": -50.6
+    },
+    "RX2": {
+      "frames": 573,
+      "duration_s": 8.0,
+      "mean_fps": 71.6,
+      "lost": 152,
+      "loss_pct": 20.97,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 13.98,
+      "interval_p95_ms": 47.94,
+      "interval_max_ms": 113.48,
+      "rssi_mean_dbm": -64.2
+    },
+    "RX3": {
+      "frames": 663,
+      "duration_s": 7.93,
+      "mean_fps": 83.6,
+      "lost": 62,
+      "loss_pct": 8.55,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 11.98,
+      "interval_p95_ms": 35.65,
+      "interval_max_ms": 102.2,
+      "rssi_mean_dbm": -54.2
+    },
+    "RX4": {
+      "frames": 592,
+      "duration_s": 7.92,
+      "mean_fps": 74.7,
+      "lost": 128,
+      "loss_pct": 17.78,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 13.4,
+      "interval_p95_ms": 47.65,
+      "interval_max_ms": 127.31,
+      "rssi_mean_dbm": -65.8
+    }
+  },
+  "sync": {
+    "receivers": [
+      "RX1",
+      "RX2",
+      "RX3",
+      "RX4"
+    ],
+    "ids_common_to_all": 486,
+    "ids_emitted_in_common_window": 720,
+    "common_pct_of_emitted": 67.5,
+    "pc_delay_ms_RX2_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 52.6
+    },
+    "pc_delay_ms_RX3_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 48.04
+    },
+    "pc_delay_ms_RX4_vs_RX1": {
+      "median": 0.0,
+      "p95_abs": 94.99
+    }
+  },
+  "ancien_chemin": "data/DATASET/immobile_plusieurs/p5/prise_003"
+}

@@ -1,0 +1,66 @@
+{
+  "source": "udp:5005 192.168.4.201=RX1 192.168.4.202=RX2 192.168.4.203=RX3 192.168.4.204=RX4",
+  "dir": "data/DATASET/debout/p1/prise_040",
+  "note": "debout sujet 1 debout_040",
+  "date": "20261110_124449",
+  "receivers": {
+    "RX1": {
+      "frames": 275,
+      "duration_s": 7.86,
+      "mean_fps": 35.0,
+      "lost": 447,
+      "loss_pct": 61.91,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 28.69,
+      "interval_p95_ms": 101.56,
+      "interval_max_ms": 354.18,
+      "rssi_mean_dbm": -64.8
+    },
+    "RX2": {
+      "frames": 0,
+      "duration_s": 0.0,
+      "mean_fps": 0.0,
+      "lost": 0,
+      "loss_pct": 0.0,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 0.0,
+      "interval_p95_ms": 0.0,
+      "interval_max_ms": 0.0,
+      "rssi_mean_dbm": null
+    },
+    "RX3": {
+      "frames": 378,
+      "duration_s": 7.94,
+      "mean_fps": 47.6,
+      "lost": 342,
+      "loss_pct": 47.5,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 21.06,
+      "interval_p95_ms": 71.92,
+      "interval_max_ms": 229.94,
+      "rssi_mean_dbm": -55.9
+    },
+    "RX4": {
+      "frames": 368,
+      "duration_s": 7.99,
+      "mean_fps": 46.1,
+      "lost": 354,
+      "loss_pct": 49.03,
+      "duplicates": 0,
+      "reordered": 0,
+      "bad_lines": 0,
+      "interval_mean_ms": 21.76,
+      "interval_p95_ms": 79.7,
+      "interval_max_ms": 255.33,
+      "rssi_mean_dbm": -60.2
+    }
+  },
+  "sync": {},
+  "ancien_chemin": "data/DATASET/debout/s01/debout_040"
+}
