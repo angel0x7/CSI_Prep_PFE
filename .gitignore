@@ -15,3 +15,4 @@ sdkconfig
 sdkconfig.old
 # enregistrements bruts (.txt, lourds) : seuls les CSV sont versionnes
 acquisition/data/**/*.txt
+acquisition/data/DATASET.zip
