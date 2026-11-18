@@ -1,0 +1,65 @@
+== reel_seul_dyn_seul
+  pli 0 : bin_acc 0.905  take_acc 0.933
+  pli 1 : bin_acc 0.881  take_acc 0.967
+  pli 2 : bin_acc 0.902  take_acc 0.967
+  pli 3 : bin_acc 0.874  take_acc 0.967
+  pli 4 : bin_acc 0.918  take_acc 1.000
+{
+ "real": {
+  "bin_acc": "0.896 \u00b1 0.016",
+  "bin_bal_acc": "0.818 \u00b1 0.030",
+  "take_acc": "0.967 \u00b1 0.021",
+  "fall_detected": "50/50",
+  "fall_onset_abs_err_median_s": 0.625,
+  "confusion_sum": [
+   [
+    4845,
+    539,
+    16,
+    143,
+    312,
+    0
+   ],
+   [
+    736,
+    5559,
+    5,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    2100,
+    0,
+    0,
+    0
+   ],
+   [
+    9,
+    0,
+    5,
+    115,
+    173,
+    0
+   ],
+   [
+    27,
+    0,
+    1,
+    74,
+    4944,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ]
+ }
+}

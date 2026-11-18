@@ -1,0 +1,11 @@
+{'assis': 9, 'chute': 10, 'debout': 8, 'marche': 3} prises mises de côté
+entraînement sur 595 prises réelles (dont augmentées), 150 exclues
+séquences multi-états : oui (900)
+  step    0  loss 12.064  (1s)
+  step  250  loss 5.171  (63s)
+  step  500  loss 4.348  (126s)
+  step  750  loss 3.978  (203s)
+  step 1000  loss 3.968  (274s)
+  step 1250  loss 3.790  (339s)
+  step 1499  loss 3.591  (405s)
+-> C:\Users\Micha\Desktop\PFE\CSI_Prep_PFE\skeleton\checkpoints\skeleton_tcn_holdout.pt

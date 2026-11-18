@@ -15,3 +15,10 @@ sdkconfig
 sdkconfig.old
 # enregistrements bruts (.txt, lourds) : seuls les CSV sont versionnes
 acquisition/data/**/*.txt
+
+# --- module squelette ---
+skeleton/cache/
+skeleton_pred.json
+acquisition/data/DATASET_AUG/
+acquisition/data/DATASET_SYNTH/
+acquisition/data/MAISON/**/*.txt

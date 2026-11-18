@@ -1,0 +1,20 @@
+séquences multi-états : oui (900)
+  step    0  loss 11.475  (0s)
+  step  250  loss 5.051  (80s)
+  step  500  loss 4.473  (152s)
+  step  750  loss 4.130  (224s)
+  step 1000  loss 3.543  (295s)
+  step 1250  loss 3.336  (367s)
+  step 1499  loss 3.485  (439s)
+{
+ "mpjpe_mm": 326.4988098144531,
+ "pck_0_2": 0.321890616711801,
+ "group_acc": 0.5653155127081507,
+ "mpjpe_mm_debout": 284.90179443359375,
+ "mpjpe_mm_assis": 289.5891418457031,
+ "mpjpe_mm_marche": 166.96607971191406,
+ "mpjpe_mm_chute": 409.78271484375,
+ "mpjpe_mm_au_sol": 631.8102416992188,
+ "mpjpe_mm_baseline_debout": 455.7144775390625
+}
+-> C:\Users\Micha\Desktop\PFE\CSI_Prep_PFE\skeleton\checkpoints\skeleton_tcn.pt (214444 paramètres)

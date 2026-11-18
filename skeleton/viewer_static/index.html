@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visualiseur squelette CSI</title>
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#1c2026; --muted:#6b7280; --line:#e3e6ea; --accent:#2563eb;
+  --grid:#e9ecef; --sel:#eef3ff; --ok:#059669; --bad:#dc2626;
+  --g-vide:#9aa0a6; --g-debout:#3b82f6; --g-assis:#10b981; --g-marche:#8b5cf6; --g-chute:#ef4444; --g-au_sol:#f59e0b;
+  --left:#2563eb; --right:#ea580c; --center:#475569;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0f1216; --panel:#171b21; --ink:#e6e9ee; --muted:#9aa3ae; --line:#272d36; --accent:#60a5fa;
+         --grid:#232932; --sel:#1d2a44; --center:#cbd5e1; --left:#60a5fa; --right:#fb923c; }
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+header h1{font-size:16px;margin:0;font-weight:650}
+header .sub{color:var(--muted);font-size:12px}
+.app{display:grid;grid-template-columns:300px 1fr;height:calc(100% - 52px)}
+aside{border-right:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:0}
+.filters{padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;border-bottom:1px solid var(--line)}
+.filters select,.filters input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+.filters .full{grid-column:1/3}
+#list{overflow:auto;flex:1;min-height:0}
+.item{padding:7px 12px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;align-items:center;gap:8px}
+.item:hover{background:var(--sel)}
+.item.active{background:var(--sel);box-shadow:inset 3px 0 0 var(--accent)}
+.item .name{flex:1;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.badge{font-size:11px;padding:1px 6px;border-radius:10px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.count{padding:6px 12px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line)}
+main{overflow:auto;padding:14px;display:grid;gap:14px;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr);grid-auto-rows:min-content}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 8px;font-weight:600}
+.span2{grid-column:1/3}
+canvas{display:block;width:100%}
+#sk{height:440px;cursor:grab}
+#sk:active{cursor:grabbing}
+.act{display:flex;align-items:baseline;gap:10px}
+.act .big{font-size:28px;font-weight:700}
+.act .conf{color:var(--muted)}
+.bars{margin-top:8px;display:grid;gap:4px}
+.bar{display:grid;grid-template-columns:62px 1fr 42px;align-items:center;gap:6px;font-size:12px}
+.bar .track{height:8px;background:var(--grid);border-radius:4px;overflow:hidden}
+.bar .fill{height:100%}
+.bar .v{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12.5px;margin-top:10px}
+.kv .k{color:var(--muted)}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.controls button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:6px 12px;font:inherit;cursor:pointer}
+.controls button.primary{background:var(--accent);border-color:var(--accent);color:#fff;min-width:84px}
+.controls input[type=range]{flex:1;min-width:160px}
+.controls .t{font-variant-numeric:tabular-nums;min-width:96px;text-align:right}
+.controls label{color:var(--muted);font-size:12px;display:flex;gap:6px;align-items:center}
+#timeline{height:150px;cursor:pointer}
+#energy{height:150px;cursor:pointer}
+#room{height:260px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.empty{color:var(--muted);padding:40px;text-align:center}
+.warn{background:color-mix(in srgb,var(--g-au_sol) 15%,transparent);border:1px solid color-mix(in srgb,var(--g-au_sol) 40%,transparent);padding:8px 10px;border-radius:8px;font-size:12.5px;margin-top:8px}
+.err{color:var(--bad)}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tabs button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:6px 14px;font:inherit;cursor:pointer}
+.tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.steps{padding:10px;display:grid;gap:6px;border-bottom:1px solid var(--line)}
+.step{display:grid;grid-template-columns:22px 1fr 64px 26px;gap:6px;align-items:center}
+.step .n{color:var(--muted);font-size:12px;text-align:right}
+.step select,.step input{padding:5px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit;min-width:0}
+.step button,.addstep{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;cursor:pointer;font:inherit;padding:4px}
+.lbl{font-size:12px;color:var(--muted);margin:2px 0}
+.hint{font-size:12px;color:var(--muted);padding:0 10px 10px;line-height:1.45}
+.run{margin:10px;padding:10px;border-radius:8px;border:0;background:var(--accent);color:#fff;font:600 15px system-ui;cursor:pointer}
+.run.stop{background:var(--bad)}
+.livestate{display:flex;align-items:center;gap:14px}
+.livestate .big{font-size:40px;font-weight:800;letter-spacing:.02em}
+.alert{background:var(--bad);color:#fff;border-radius:8px;padding:10px 12px;font-weight:700;margin-top:10px;animation:blink 1s steps(2) 3}
+@keyframes blink{50%{opacity:.55}}
+.evlog{max-height:220px;overflow:auto;font-size:12.5px;font-variant-numeric:tabular-nums}
+.evlog div{padding:3px 0;border-bottom:1px solid var(--line)}
+table.sum{border-collapse:collapse;font-size:12.5px;width:100%}
+table.sum td,table.sum th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left}
+#lsk{height:380px;cursor:grab}
+#ltl{height:170px}
+@media (max-width:900px){.app{grid-template-columns:1fr}aside{max-height:40vh}main{grid-template-columns:1fr}.span2{grid-column:auto}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Visualiseur squelette CSI</h1>
+  <span class="sub">4 récepteurs ESP32-S3 · modèle SkeletonTCN · COCO-17 · <span id="hdr-info"></span></span>
+  <div class="tabs"><button id="tab-takes" class="on">Prises enregistrées</button><button id="tab-live">Test en direct</button></div>
+</header>
+<div class="app">
+  <aside>
+    <div class="filters">
+      <select id="ds" class="full" title="Jeu de données"></select>
+      <select id="mode" class="full" title="Mode d'analyse">
+        <option value="prise_entiere">Analyse de la prise entière (8 s, comme une vidéo)</option>
+        <option value="temps_reel">Temps réel (passé uniquement, comme le dashboard)</option>
+      </select>
+      <select id="f-act" title="Activité"><option value="">toutes activités</option></select>
+      <select id="f-p" title="Personnes"><option value="1">1 personne</option><option value="">toutes</option></select>
+      <input id="f-q" class="full" placeholder="Rechercher (ex. prise_010, aug)">
+    </div>
+    <div class="count" id="count"></div>
+    <div id="list"></div>
+  </aside>
+  <main id="main">
+    <div class="card span2 empty" id="placeholder">Choisissez une prise dans la liste à gauche.</div>
+  </main>
+  <aside id="live-aside" hidden>
+    <div class="filters">
+      <div class="full lbl">Scénario</div>
+      <select id="l-preset" class="full"></select>
+    </div>
+    <div class="steps" id="l-steps"></div>
+    <div class="filters">
+      <div class="full lbl">Source du signal CSI</div>
+      <select id="l-source" class="full">
+        <option value="reel">Réel : montage de vraies prises jamais vues par le modèle</option>
+        <option value="simule">Simulé : transitions physiques, vérité exacte</option>
+      </select>
+      <select id="l-speed" title="Vitesse de rejeu"><option value="1">vitesse ×1 (temps réel)</option><option value="2">×2</option><option value="4">×4</option></select>
+      <input id="l-seed" placeholder="graine (vide = hasard)">
+    </div>
+    <button class="run" id="l-run">▶ Lancer le test</button>
+    <div class="hint" id="l-hint"></div>
+  </aside>
+  <main id="live-main" hidden>
+    <div class="card span2 empty">Composez un scénario à gauche puis cliquez sur « Lancer le test ». Les trames CSI sont rejouées au rythme réel, comme si elles arrivaient des ESP32, et le modèle temps réel classe l'état en direct.</div>
+  </main>
+</div>
+<template id="ltpl">
+  <div class="card">
+    <h2>Squelette en direct <span id="l-gtnote" style="text-transform:none;letter-spacing:0;font-weight:400">· pointillés = vérité (simulation)</span></h2>
+    <canvas id="lsk"></canvas>
+  </div>
+  <div style="display:grid;gap:14px;min-width:0;align-content:start">
+    <div class="card">
+      <h2>État détecté en direct</h2>
+      <div class="livestate"><span class="big" id="l-state">–</span><span class="conf" id="l-conf"></span></div>
+      <div class="kv" id="l-kv"></div>
+      <div id="l-alert"></div>
+      <div class="bars" id="l-bars"></div>
+    </div>
+    <div class="card"><h2>Journal</h2><div class="evlog" id="l-log"></div></div>
+  </div>
+  <div class="card span2">
+    <h2>Chronologie · haut = vérité du scénario · milieu = état détecté · bas = probabilités</h2>
+    <canvas id="ltl"></canvas>
+    <div class="legend" id="l-legend"></div>
+  </div>
+  <div class="card span2" id="l-summary" hidden></div>
+</template>
+
+<template id="tpl">
+  <div class="card">
+    <h2>Squelette (repère du corps) <span id="sk-hint" style="text-transform:none;letter-spacing:0;font-weight:400">· glisser pour tourner, molette pour zoomer</span></h2>
+    <canvas id="sk"></canvas>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--left)"></i>côté gauche</span>
+      <span><i class="dot" style="background:var(--right)"></i>côté droit</span>
+      <span id="lg-gt" hidden><i class="dot" style="background:var(--muted)"></i>vérité terrain (simulation)</span>
+      <label style="margin-left:auto"><input type="checkbox" id="raw"> sortie brute du modèle (sans animation)</label>
+    </div>
+  </div>
+  <div style="display:grid;gap:14px;min-width:0">
+    <div class="card">
+      <h2>Activité détectée</h2>
+      <div class="act"><span class="big" id="a-label">–</span><span class="conf" id="a-conf"></span></div>
+      <div class="bars" id="bars"></div>
+      <div class="kv" id="kv"></div>
+      <div id="warn"></div>
+    </div>
+    <div class="card">
+      <h2>Plan de la salle</h2>
+      <canvas id="room"></canvas>
+      <div class="legend" id="room-legend"></div>
+    </div>
+  </div>
+  <div class="card span2">
+    <div class="controls">
+      <button class="primary" id="play">▶ Lecture</button>
+      <button id="prev" title="Image précédente (←)">◀︎</button>
+      <button id="next" title="Image suivante (→)">▶︎</button>
+      <input type="range" id="scrub" min="0" max="0" value="0">
+      <span class="t" id="tlabel"></span>
+      <label>vitesse <select id="speed"><option>0.25</option><option>0.5</option><option selected>1</option><option>2</option></select></label>
+      <label><input type="checkbox" id="loop" checked> boucle</label>
+      <button id="video" title="Télécharger la vidéo de la prise (GIF)">⬇ Vidéo GIF</button>
+    </div>
+  </div>
+  <div class="card span2">
+    <h2>Probabilités d'activité dans le temps · bande du bas = étiquette de référence</h2>
+    <canvas id="timeline"></canvas>
+    <div class="legend" id="tl-legend"></div>
+  </div>
+  <div class="card span2">
+    <h2>Énergie de mouvement CSI par récepteur · hachures = trames perdues</h2>
+    <canvas id="energy"></canvas>
+    <div class="legend" id="en-legend"></div>
+  </div>
+</template>
+
+<script>
+"use strict";
+const SKEL=[[15,13],[13,11],[16,14],[14,12],[11,12],[5,11],[6,12],[5,6],[5,7],[6,8],[7,9],[8,10],[1,2],[0,1],[0,2],[1,3],[2,4],[3,5],[4,6]];
+const LEFT=new Set([1,3,5,7,9,11,13,15]), RIGHT=new Set([2,4,6,8,10,12,14,16]);
+const RXC=["#0ea5e9","#d946ef","#14b8a6","#f97316"];
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const gcol=g=>css("--g-"+g)||"#888";
+let META=null, DATA=null, CUR=null, i=0, playing=false, last=0, acc=0;
+let yaw=-0.7, pitch=0.22, zoom=1;
+
+// ------------------------------------------------------------------ données
+async function api(u){const r=await fetch(u);const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j;}
+
+async function init(){
+  META=await api("/api/takes");
+  const ds=document.getElementById("ds");
+  for(const k of Object.keys(META.datasets)){
+    const o=document.createElement("option");o.value=k;
+    o.textContent={DATASET:"Réel — DATASET",DATASET_AUG:"Réel + augmenté — DATASET_AUG",DATASET_SYNTH:"Simulé — DATASET_SYNTH (vérité terrain)"}[k]||k;
+    o.textContent+=` (${META.datasets[k].length})`;ds.appendChild(o);
+  }
+  const acts=new Set();Object.values(META.datasets).flat().forEach(r=>acts.add(r.activity));
+  const fa=document.getElementById("f-act");[...acts].sort().forEach(a=>{const o=document.createElement("option");o.value=a;o.textContent=a;fa.appendChild(o)});
+  ["ds","f-act","f-p"].forEach(id=>document.getElementById(id).onchange=renderList);
+  const md=document.getElementById("mode");
+  [...md.options].forEach(o=>{if(!META.modes.includes(o.value))o.disabled=true,o.textContent+=" — modèle absent"});
+  if(!META.modes.includes(md.value))md.value=META.modes[0];
+  md.onchange=()=>{if(CUR)open(CUR.ds,CUR.path)};
+  document.getElementById("f-q").oninput=renderList;
+  const u=new URLSearchParams(location.search);
+  if(u.get("ds")&&META.datasets[u.get("ds")])ds.value=u.get("ds");
+  if(u.get("mode")&&META.modes.includes(u.get("mode")))md.value=u.get("mode");
+  renderList();
+  if(u.get("take")){CUR={ds:ds.value,path:u.get("take")};renderList();
+    if(await open(ds.value,u.get("take"))&&u.get("t")){i=Math.min(DATA.frames.length-1,Math.round(+u.get("t")*DATA.fs));draw();}}
+}
+
+function renderList(){
+  const ds=document.getElementById("ds").value, a=document.getElementById("f-act").value,
+        p=document.getElementById("f-p").value, q=document.getElementById("f-q").value.toLowerCase();
+  const rows=(META.datasets[ds]||[]).filter(r=>(!a||r.activity===a)&&(!p||String(r.persons)===p||(p==="1"&&r.persons===0))&&(!q||r.path.toLowerCase().includes(q)));
+  document.getElementById("count").textContent=`${rows.length} prise(s)`;
+  const L=document.getElementById("list");L.innerHTML="";
+  for(const r of rows){
+    const d=document.createElement("div");d.className="item";if(CUR&&CUR.ds===ds&&CUR.path===r.path)d.classList.add("active");
+    const badge=r.augmented?"augmentée":(r.quality==="inutilisable"?"inutilisable":(r.persons>1?`${r.persons} pers.`:(r.quality==="simulee"?"simulée":"")));
+    d.innerHTML=`<i class="dot" style="background:${gcol(r.activity==="chute"?"chute":r.activity)}"></i><span class="name">${r.path}</span>${badge?`<span class="badge">${badge}</span>`:""}`;
+    d.onclick=()=>{document.querySelectorAll(".item.active").forEach(e=>e.classList.remove("active"));d.classList.add("active");open(ds,r.path)};
+    L.appendChild(d);
+  }
+}
+
+async function open(ds,path){
+  const mode=document.getElementById("mode").value;
+  CUR={ds,path,mode};playing=false;
+  history.replaceState(null,"",`?ds=${encodeURIComponent(ds)}&take=${encodeURIComponent(path)}&mode=${mode}`);
+  const main=document.getElementById("main");
+  main.innerHTML=`<div class="card span2 empty">Calcul du modèle sur <b>${path}</b>…</div>`;
+  let res;
+  try{res=await api(`/api/predict?ds=${encodeURIComponent(ds)}&take=${encodeURIComponent(path)}&mode=${mode}`);}
+  catch(e){DATA=null;main.innerHTML=`<div class="card span2 empty err">Erreur : ${e.message}</div>`;return false;}
+  if(CUR.ds!==ds||CUR.path!==path||CUR.mode!==mode)return false;            // une autre prise a été choisie entre-temps
+  DATA=res;
+  main.innerHTML="";main.appendChild(document.getElementById("tpl").content.cloneNode(true));
+  i=Math.min(DATA.frames.length-1,Math.round(DATA.warmup_s*DATA.fs));
+  setup();computeSummary();draw();
+  return true;
+}
+
+// ------------------------------------------------------------------ résumé
+const WARM=()=>Math.round(DATA.warmup_s*DATA.fs);
+function takeDecision(){
+  const fr=DATA.frames.slice(WARM());const c={};META.groups.forEach(g=>c[g]=0);
+  fr.forEach(f=>c[f.activity]++);
+  if((c.chute+c.au_sol)/Math.max(fr.length,1)>=0.2)return "chute";
+  let best=null;for(const g of META.groups){if(g==="chute"||g==="au_sol")continue;if(best===null||c[g]>c[best])best=g;}return best;
+}
+function computeSummary(){
+  const tr=DATA.truth, w=WARM(), S={};
+  S.pred=takeDecision();S.true=DATA.activity_true;
+  if(tr.group){let n=0,ok=0;for(let k=w;k<DATA.frames.length;k++){const y=tr.group[k];if(y<0)continue;n++;if(META.groups[y]===DATA.frames[k].activity)ok++;}S.binacc=n?ok/n:null;}
+  if(tr.kp){let s=0,n=0;for(let k=w;k<DATA.frames.length;k++){if(tr.group[k]===0)continue;s+=mpjpe(DATA.frames[k].keypoints_body,tr.kp[k]);n++;}S.mpjpe=n?s/n:null;}
+  DATA.summary=S;
+}
+function mpjpe(a,b){let s=0;for(let j=0;j<17;j++)s+=Math.hypot(a[j][0]-b[j][0],a[j][1]-b[j][1],a[j][2]-b[j][2]);return s/17;}
+
+// ------------------------------------------------------------------ interface
+function setup(){
+  const n=DATA.frames.length, sc=document.getElementById("scrub");sc.max=n-1;
+  sc.oninput=()=>{i=+sc.value;draw()};
+  document.getElementById("play").onclick=togglePlay;
+  document.getElementById("prev").onclick=()=>{i=Math.max(0,i-1);draw()};
+  document.getElementById("next").onclick=()=>{i=Math.min(n-1,i+1);draw()};
+  const sk=document.getElementById("sk");let drag=null;
+  sk.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY,yaw,pitch};sk.setPointerCapture(e.pointerId)};
+  sk.onpointermove=e=>{if(!drag)return;yaw=drag.yaw+(e.clientX-drag.x)*0.01;pitch=Math.max(-0.2,Math.min(1.3,drag.pitch+(e.clientY-drag.y)*0.008));draw()};
+  sk.onpointerup=()=>drag=null;
+  sk.onwheel=e=>{e.preventDefault();zoom=Math.max(0.5,Math.min(2.5,zoom*(e.deltaY<0?1.1:0.9)));draw()};
+  for(const id of ["timeline","energy"]){
+    const c=document.getElementById(id);let down=false;
+    const seek=e=>{const r=c.getBoundingClientRect();const x=(e.clientX-r.left)/r.width;i=Math.max(0,Math.min(n-1,Math.round(x*(n-1))));draw()};
+    c.onpointerdown=e=>{down=true;c.setPointerCapture(e.pointerId);seek(e)};c.onpointermove=e=>{if(down)seek(e)};c.onpointerup=()=>down=false;
+  }
+  document.getElementById("lg-gt").hidden=!DATA.truth.kp;
+  document.getElementById("raw").onchange=draw;
+  const vb=document.getElementById("video");
+  vb.onclick=async()=>{vb.disabled=true;const old=vb.textContent;vb.textContent="⏳ génération (≈20–60 s)…";
+    try{const r=await fetch(`/api/video?ds=${encodeURIComponent(CUR.ds)}&take=${encodeURIComponent(CUR.path)}&mode=${CUR.mode}`);
+      if(!r.ok)throw new Error((await r.json()).error);
+      const b=await r.blob(),a=document.createElement("a");a.href=URL.createObjectURL(b);
+      a.download=`${CUR.path.replaceAll("/","_")}_${CUR.mode}.gif`;a.click();}
+    catch(e){alert("Export impossible : "+e.message)}
+    vb.disabled=false;vb.textContent=old;};
+  document.getElementById("tl-legend").innerHTML=META.groups.map(g=>`<span><i class="dot" style="background:${gcol(g)}"></i>${g}</span>`).join("")+(DATA.warmup_s>0?`<span>▒ zone de démarrage (${DATA.warmup_s.toFixed(1)} s de contexte incomplet)</span>`:"");
+  document.getElementById("en-legend").innerHTML=["RX1","RX2","RX3","RX4"].map((r,k)=>{
+    const lp=DATA.note.loss_pct&&DATA.note.loss_pct[r]!=null?` · ${DATA.note.loss_pct[r]} % perdues`:"";
+    return `<span><i class="dot" style="background:${RXC[k]}"></i>${r}${lp}</span>`}).join("");
+}
+function togglePlay(){
+  playing=!playing;if(playing&&i>=DATA.frames.length-1)i=0;
+  document.getElementById("play").textContent=playing?"❚❚ Pause":"▶ Lecture";last=performance.now();acc=0;
+  if(playing)requestAnimationFrame(tick);
+}
+function tick(now){
+  if(!playing||!DATA)return;
+  acc+=(now-last)/1000*(+document.getElementById("speed").value)*DATA.fs;last=now;
+  while(acc>=1){acc-=1;i++;if(i>=DATA.frames.length){if(document.getElementById("loop").checked)i=WARM();else{i=DATA.frames.length-1;togglePlay();break}}}
+  draw();if(playing)requestAnimationFrame(tick);
+}
+document.addEventListener("keydown",e=>{
+  if(!DATA||e.target.tagName==="INPUT"&&e.target.type!=="range")return;
+  if(e.code==="Space"){e.preventDefault();togglePlay()}
+  if(e.code==="ArrowLeft"){i=Math.max(0,i-1);draw()}
+  if(e.code==="ArrowRight"){i=Math.min(DATA.frames.length-1,i+1);draw()}
+});
+window.addEventListener("resize",()=>DATA&&draw());
+
+function fit(c){const r=c.getBoundingClientRect(),d=devicePixelRatio||1;
+  if(c.width!==Math.round(r.width*d)||c.height!==Math.round(r.height*d)){c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);}
+  const x=c.getContext("2d");x.setTransform(d,0,0,d,0,0);return [x,r.width,r.height];}
+
+function draw(){
+  if(!document.getElementById("sk"))return;
+  const f=DATA.frames[i];
+  document.getElementById("scrub").value=i;
+  document.getElementById("tlabel").textContent=`${f.t.toFixed(2)} s / ${DATA.frames[DATA.frames.length-1].t.toFixed(1)} s`;
+  const raw=document.getElementById("raw").checked, tr=DATA.truth;
+  drawSkeleton(raw?Object.assign({},f,{keypoints_body:f.keypoints_model}):f,
+               tr.kp&&tr.group[i]!==0?tr.kp[i]:null);
+  drawPanel(f);drawRoom(f);drawTimeline();drawEnergy();
+}
+
+// ------------------------------------------------------------------ squelette 3D
+function drawSkeleton(f,gt,canvasId){
+  // f = {keypoints_body, present, msg?} ; gt = squelette de vérité terrain (pointillés) ou null
+  const [x,W,H]=fit(document.getElementById(canvasId||"sk"));x.clearRect(0,0,W,H);
+  const s=Math.min(W,H)/2.4*zoom, cx=W/2, cy=H*0.86;
+  const cy_=Math.cos(yaw), sy=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch);
+  const P=p=>{const vx=p[0]*cy_-p[1]*sy, vy=p[0]*sy+p[1]*cy_, vz=p[2]-0.9;
+    const sy2=vz*cp-vy*sp, d=vy*cp+vz*sp, k=4/(4+d);return [cx+vx*s*k, cy-(sy2+0.9*cp)*s*k, d];};
+  // sol
+  x.strokeStyle=css("--grid");x.lineWidth=1;
+  for(let g=-1.5;g<=1.501;g+=0.5){let a=P([g,-1.5,0]),b=P([g,1.5,0]);line(x,a,b);a=P([-1.5,g,0]);b=P([1.5,g,0]);line(x,a,b);}
+  // flèche "avant"
+  x.strokeStyle=css("--muted");x.lineWidth=1.5;const a0=P([0,0.2,0]),a1=P([0,0.9,0]);line(x,a0,a1);
+  x.fillStyle=css("--muted");x.font="11px system-ui";x.fillText("avant",a1[0]+4,a1[1]);
+  if(gt){x.setLineDash([5,4]);x.lineWidth=2.5;x.strokeStyle=css("--muted");x.globalAlpha=0.6;
+    for(const [a,b] of SKEL)line(x,P(gt[a]),P(gt[b]));x.setLineDash([]);x.globalAlpha=1;}
+  if(!f.present){x.fillStyle=css("--muted");x.font="15px system-ui";x.textAlign="center";x.fillText(f.msg||"personne absente (vide)",W/2,H/2);x.textAlign="start";return;}
+  const kp=f.keypoints_body, pts=kp.map(P);
+  const order=SKEL.map(b=>[b,(pts[b[0]][2]+pts[b[1]][2])/2]).sort((u,v)=>v[1]-u[1]);
+  x.lineCap="round";
+  for(const [[a,b]] of order){
+    x.strokeStyle=LEFT.has(a)&&LEFT.has(b)?css("--left"):RIGHT.has(a)&&RIGHT.has(b)?css("--right"):css("--center");
+    x.lineWidth=5;line(x,pts[a],pts[b]);
+  }
+  for(let j=0;j<17;j++){x.fillStyle=j<5?css("--center"):(LEFT.has(j)?css("--left"):css("--right"));
+    x.beginPath();x.arc(pts[j][0],pts[j][1],j===0?6:4,0,7);x.fill();}
+}
+function line(x,a,b){x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke();}
+
+// ------------------------------------------------------------------ panneau
+function drawPanel(f){
+  document.getElementById("a-label").textContent=f.activity;document.getElementById("a-label").style.color=gcol(f.activity);
+  document.getElementById("a-conf").textContent=`${Math.round(f.confidence*100)} %`;
+  document.getElementById("bars").innerHTML=META.groups.map(g=>{const p=f.probs[g];
+    return `<div class="bar"><span>${g}</span><div class="track"><div class="fill" style="width:${(p*100).toFixed(1)}%;background:${gcol(g)}"></div></div><span class="v">${Math.round(p*100)} %</span></div>`}).join("");
+  const S=DATA.summary, tr=DATA.truth, rows=[];
+  rows.push(["Prise",`${CUR.ds}/${CUR.path}`]);
+  rows.push(["Activité réelle",S.true]);
+  rows.push(["Décision du modèle",`<span class="${S.pred===S.true?"ok":"bad"}">${S.pred} ${S.pred===S.true?"✔":"✘"}</span>`]);
+  if(S.binacc!=null)rows.push(["Accord par bin",`${(S.binacc*100).toFixed(1)} %`]);
+  if(tr.group&&tr.group[i]>=0)rows.push(["Référence à t",META.groups[tr.group[i]]]);
+  rows.push(["Mode",DATA.mode==="prise_entiere"?"prise entière (8 s, passé + futur)":"temps réel (passé uniquement)"]);
+  rows.push(["Taille estimée",`${f.height_m.toFixed(2)} m`]);
+  if(DATA.animation&&DATA.animation.gait_hz&&S.pred==="marche")rows.push(["Cadence de marche",`${DATA.animation.gait_hz} cycle/s — ${DATA.animation.gait_source}`]);
+  if(tr.kp&&tr.group[i]!==0)rows.push(["Erreur squelette (t)",`${Math.round(mpjpe(f.keypoints_body,tr.kp[i])*1000)} mm`]);
+  if(S.mpjpe!=null)rows.push(["Erreur moyenne (MPJPE)",`${Math.round(S.mpjpe*1000)} mm`]);
+  rows.push(["Référence",tr.kind]);
+  const aug=DATA.note.augmentation;if(aug)rows.push(["Augmentation",`×${aug.stretch}${aug.reversed?", inversée":""}${aug.recombined?", recombinée":""}${aug.shift_s?`, décalage ${aug.shift_s} s`:""}`]);
+  document.getElementById("kv").innerHTML=rows.map(([k,v])=>`<span class="k">${k}</span><span>${v}</span>`).join("");
+  const w=[];
+  if(DATA.warmup_s>0&&i<WARM())w.push("Mode temps réel, début de prise : le modèle n'a pas encore 3 s de passé, prédiction moins fiable. Le mode « prise entière » n'a pas ce problème.");
+  if(DATA.persons>1)w.push(`Prise à ${DATA.persons} personnes : le modèle actuel est prévu pour 1 personne.`);
+  if(tr.kind&&tr.kind.startsWith("faible"))w.push("Pas de caméra : le squelette réel n'est pas connu. Seule l'activité peut être vérifiée.");
+  document.getElementById("warn").innerHTML=w.map(t=>`<div class="warn">${t}</div>`).join("");
+}
+
+// ------------------------------------------------------------------ salle
+function drawRoom(f){
+  const [x,W,H]=fit(document.getElementById("room"));x.clearRect(0,0,W,H);
+  const R=META.room, m=18, s=Math.min((W-2*m)/R.L,(H-2*m)/R.W), ox=(W-R.L*s)/2, oy=(H-R.W*s)/2;
+  const M=(px,py)=>[ox+px*s, oy+(R.W-py)*s];
+  x.fillStyle=css("--bg");x.strokeStyle=css("--line");x.lineWidth=2;x.fillRect(ox,oy,R.L*s,R.W*s);x.strokeRect(ox,oy,R.L*s,R.W*s);
+  x.font="11px system-ui";
+  Object.entries(R.rx).forEach(([n,p],k)=>{const [a,b]=M(p[0],p[1]);x.fillStyle=RXC[k];x.fillRect(a-5,b-5,10,10);x.fillStyle=css("--ink");x.fillText(n,a+(p[0]<R.L/2?8:-30),b+(p[1]<R.W/2?-6:14));});
+  const [tx,ty]=M(R.tx[0],R.tx[1]);x.fillStyle=css("--accent");x.beginPath();x.arc(tx,ty,6,0,7);x.fill();x.fillStyle=css("--ink");x.fillText("S + AP",tx+8,ty-6);
+  const tr=DATA.truth, leg=document.getElementById("room-legend");
+  if(tr.pos){
+    x.strokeStyle=css("--muted");x.lineWidth=1;x.beginPath();
+    for(let k=Math.max(0,i-60);k<=i;k++){const [a,b]=M(tr.pos[k][0],tr.pos[k][1]);k===Math.max(0,i-60)?x.moveTo(a,b):x.lineTo(a,b);}x.stroke();
+    if(tr.group[i]!==0){const [px,py]=tr.pos[i], h=tr.heading[i];
+      // squelette prédit vu de dessus, placé à la vraie position
+      const c=Math.cos(h-Math.PI/2), sn=Math.sin(h-Math.PI/2);
+      const Wp=p=>M(px+p[0]*c-p[1]*sn, py+p[0]*sn+p[1]*c);
+      x.strokeStyle=gcol(f.activity);x.lineWidth=2.5;for(const [a,b] of SKEL){const u=Wp(f.keypoints_body[a]),v=Wp(f.keypoints_body[b]);line(x,u,v);}
+      const [a,b]=M(px,py);x.strokeStyle=css("--ink");x.lineWidth=1.5;line(x,[a,b],[a+Math.cos(h)*22,b-Math.sin(h)*22]);
+    }
+    leg.innerHTML="<span>trait gris : trajectoire (2 s) · squelette prédit vu de dessus, placé à la vraie position simulée</span>";
+  }else{
+    leg.innerHTML="<span>Position non estimée : elle viendra du module de localisation. Positions des RX = hypothèses de config.py.</span>";
+  }
+}
+
+// ------------------------------------------------------------------ frise des probabilités
+function drawTimeline(){
+  const [x,W,H]=fit(document.getElementById("timeline"));x.clearRect(0,0,W,H);
+  const n=DATA.frames.length, top=4, ph=H-40, sw=W/n;
+  for(let k=0;k<n;k++){let y=top+ph;const p=DATA.frames[k].probs;
+    for(const g of META.groups){const h=p[g]*ph;if(h<0.3)continue;x.fillStyle=gcol(g);x.fillRect(k*sw,y-h,sw+0.6,h);y-=h;}}
+  const tr=DATA.truth, by=top+ph+8;
+  if(tr.group){for(let k=0;k<n;k++){const g=tr.group[k];x.fillStyle=g<0?css("--grid"):gcol(META.groups[g]);x.fillRect(k*sw,by,sw+0.6,12);}}
+  x.fillStyle=css("--muted");x.font="11px system-ui";x.fillText("▲ référence",4,by+25);
+  const w=WARM()*sw;x.fillStyle=css("--bg");x.globalAlpha=0.55;x.fillRect(0,top,w,ph);x.globalAlpha=1;
+  if(tr.t_fall!=null){const fx=tr.t_fall/ (DATA.frames[n-1].t)*W;x.strokeStyle=css("--ink");x.setLineDash([3,3]);line(x,[fx,top],[fx,by+12]);x.setLineDash([]);x.fillStyle=css("--ink");x.fillText("chute estimée",fx+4,top+12);}
+  cursor(x,i*sw+sw/2,H);
+  for(let s=2;s<=8;s+=2){const xx=s*DATA.fs*sw;x.fillStyle=css("--muted");x.fillText(`${s}s`,Math.min(xx+2,W-18),H-2);}
+}
+function cursor(x,cx,H){x.strokeStyle=css("--ink");x.lineWidth=2;line(x,[cx,0],[cx,H]);}
+
+// ------------------------------------------------------------------ énergie CSI
+function drawEnergy(){
+  const [x,W,H]=fit(document.getElementById("energy"));x.clearRect(0,0,W,H);
+  const E=DATA.energy, Rm=DATA.received, n=E[0].length, sw=W/n, top=6, ph=H-34;
+  let mx=0.5;E.forEach(r=>r.forEach(v=>mx=Math.max(mx,v)));mx*=1.05;
+  x.strokeStyle=css("--grid");x.lineWidth=1;for(let g=0;g<=4;g++){const y=top+ph*g/4;line(x,[0,y],[W,y]);}
+  // trames perdues : une petite bande hachurée par RX sous le graphe
+  Rm.forEach((r,k)=>{for(let t=0;t<n;t++)if(!r[t]){x.fillStyle=RXC[k];x.globalAlpha=0.55;x.fillRect(t*sw,top+ph+4+k*5,sw+0.6,4);}x.globalAlpha=1;});
+  E.forEach((r,k)=>{x.strokeStyle=RXC[k];x.lineWidth=1.6;x.beginPath();r.forEach((v,t)=>{const xx=t*sw+sw/2,yy=top+ph-v/mx*ph;t?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke();});
+  x.fillStyle=css("--muted");x.font="11px system-ui";x.fillText(mx.toFixed(1),4,top+10);
+  cursor(x,i*sw+sw/2,H);
+}
+
+// ================================================================== TEST EN DIRECT
+let LP=null, LIVE=null, lyaw=-0.7;
+function setTab(live){
+  document.getElementById("tab-live").classList.toggle("on",live);document.getElementById("tab-takes").classList.toggle("on",!live);
+  document.querySelector("aside:not(#live-aside)").hidden=live;document.getElementById("main").hidden=live;
+  document.getElementById("live-aside").hidden=!live;document.getElementById("live-main").hidden=!live;
+  if(live){playing=false;if(!LP)liveInit();}
+}
+document.getElementById("tab-takes").onclick=()=>setTab(false);
+document.getElementById("tab-live").onclick=()=>setTab(true);
+let STEPS=[];
+async function liveInit(){
+  LP=await api("/api/presets");
+  const ps=document.getElementById("l-preset");
+  ps.innerHTML=Object.keys(LP.presets).map(k=>`<option>${k}</option>`).join("")+`<option value="__custom">(personnalisé)</option>`;
+  ps.onchange=()=>{if(ps.value!=="__custom"){STEPS=LP.presets[ps.value].split(",").map(p=>{const [s,d]=p.split(":");return [s,+d]});renderSteps();}};
+  ps.onchange();
+  document.getElementById("l-run").onclick=()=>LIVE&&LIVE.es&&!LIVE.fin?liveStop():liveStart();
+  const ho=LP.holdout?Object.entries(LP.holdout).map(([k,v])=>`${v} ${k}`).join(", "):"aucune";
+  document.getElementById("l-hint").innerHTML=`Modèle : ${LP.model}.<br>Prises réelles mises de côté : ${ho}.<br>Le source « réel » assemble des segments de ces prises : vrai signal, mais les raccords entre segments sont artificiels (la personne change de place d'un coup). « chute » = la chute puis au sol, toujours en dernier.`;
+}
+function renderSteps(){
+  const box=document.getElementById("l-steps");
+  box.innerHTML=STEPS.map(([st,d],k)=>`<div class="step"><span class="n">${k+1}</span>
+    <select data-k="${k}" class="st">${LP.states.map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select>
+    <input data-k="${k}" class="du" type="number" min="1" max="30" step="0.5" value="${d}" title="durée (s)">
+    <button data-k="${k}" class="rm" title="retirer">×</button></div>`).join("")+`<button class="addstep" id="l-add">+ ajouter un état</button>`;
+  const custom=()=>{document.getElementById("l-preset").value="__custom"};
+  box.querySelectorAll(".st").forEach(e=>e.onchange=()=>{STEPS[+e.dataset.k][0]=e.value;custom()});
+  box.querySelectorAll(".du").forEach(e=>e.onchange=()=>{STEPS[+e.dataset.k][1]=+e.value;custom()});
+  box.querySelectorAll(".rm").forEach(e=>e.onclick=()=>{STEPS.splice(+e.dataset.k,1);custom();renderSteps()});
+  document.getElementById("l-add").onclick=()=>{const last=STEPS.length&&STEPS[STEPS.length-1][0]==="chute";
+    STEPS.splice(last?STEPS.length-1:STEPS.length,0,["marche",4]);custom();renderSteps()};
+}
+function liveStop(){if(LIVE&&LIVE.es){LIVE.es.close();LIVE.stopped=true;}runBtn(false);liveDraw();}
+function runBtn(running){const b=document.getElementById("l-run");b.textContent=running?"■ Arrêter":"▶ Lancer le test";b.classList.toggle("stop",running);}
+function liveStart(){
+  if(LIVE&&LIVE.es)LIVE.es.close();
+  const sc=STEPS.map(([s,d])=>`${s}:${d}`).join(","), src=document.getElementById("l-source").value,
+        sp=document.getElementById("l-speed").value, seed=document.getElementById("l-seed").value.trim();
+  const m=document.getElementById("live-main");
+  m.innerHTML=`<div class="card span2 empty">Préparation du scénario (${src==="simule"?"simulation du signal CSI…":"montage des vraies prises…"})</div>`;
+  LIVE={ticks:[],events:[],fin:null};runBtn(true);
+  const es=new EventSource(`/api/live?scenario=${encodeURIComponent(sc)}&source=${src}&speed=${sp}&seed=${encodeURIComponent(seed)}`);
+  LIVE.es=es;
+  es.onmessage=e=>{const d=JSON.parse(e.data);
+    if(d.type==="init"){Object.assign(LIVE,d);m.innerHTML="";m.appendChild(document.getElementById("ltpl").content.cloneNode(true));liveSetup();}
+    else if(d.type==="tick"){LIVE.ticks.push(d);if(d.evenement)LIVE.events.push(d.evenement);liveDraw();}
+    else if(d.type==="fin"){LIVE.fin=d.score;es.close();runBtn(false);liveDraw();}
+    else if(d.type==="erreur"){es.close();runBtn(false);m.innerHTML=`<div class="card span2 empty err">Erreur : ${d.message}</div>`;}};
+  es.onerror=()=>{es.close();if(!LIVE.fin&&!LIVE.stopped){runBtn(false);
+    if(!LIVE.truth)m.innerHTML=`<div class="card span2 empty err">Connexion au serveur impossible.</div>`;}};
+}
+function liveSetup(){
+  document.getElementById("l-gtnote").hidden=!LIVE.truth_kp;
+  const c=document.getElementById("lsk");let drag=null;
+  c.onpointerdown=e=>{drag={x:e.clientX,yaw:lyaw};c.setPointerCapture(e.pointerId)};
+  c.onpointermove=e=>{if(drag){lyaw=drag.yaw+(e.clientX-drag.x)*0.01;liveDraw()}};c.onpointerup=()=>drag=null;
+  document.getElementById("l-legend").innerHTML=META.groups.map(g=>`<span><i class="dot" style="background:${gcol(g)}"></i>${g}</span>`).join("")+
+    `<span><i class="dot" style="background:var(--grid)"></i>analyse (${LIVE.warmup_s} s de passé nécessaires)</span>`;
+}
+function truthAt(t){for(const [a,b,g] of LIVE.truth)if(t>=a&&t<b)return g;return LIVE.truth[LIVE.truth.length-1][2];}
+const sameState=(p,g)=>p===g||(["chute","au_sol"].includes(p)&&["chute","au_sol"].includes(g));
+function liveDraw(){
+  if(!LIVE||!LIVE.truth||!document.getElementById("lsk"))return;
+  const d=LIVE.ticks[LIVE.ticks.length-1];
+  const tk=LIVE.truth_kp;
+  if(d){
+    const y0=yaw;yaw=lyaw;
+    drawSkeleton({keypoints_body:d.kp,present:!["vide","analyse"].includes(d.etat),msg:d.etat==="analyse"?"analyse en cours…":null},
+                 tk?tk[Math.min(tk.length-1,Math.round(d.t*10))]:null,"lsk");
+    yaw=y0;
+    const st=document.getElementById("l-state");st.textContent=d.etat==="analyse"?"analyse…":d.etat.toUpperCase();
+    st.style.color=d.etat==="analyse"?css("--muted"):gcol(d.etat);
+    document.getElementById("l-conf").textContent=d.etat==="analyse"?"":`${Math.round(100*(d.probs[d.etat]||0))} %`;
+    const g=truthAt(d.t), ok=sameState(d.etat,g);
+    const after=LIVE.ticks.filter(r=>r.etat!=="analyse");
+    const acc=after.length?after.filter(r=>sameState(r.etat,truthAt(r.t))).length/after.length:null;
+    document.getElementById("l-kv").innerHTML=[["Temps",`${d.t.toFixed(1)} / ${LIVE.duration.toFixed(1)} s`],
+      ["Vérité à cet instant",`${g} ${d.etat==="analyse"?"":(ok?'<span class="ok">✔</span>':'<span class="bad">✘</span>')}`],
+      ["Accord depuis le début",acc==null?"–":`${Math.round(acc*100)} %`],
+      ["Trames dans le tampon",Object.entries(d.trames).map(([k,v])=>`${k}:${v}`).join(" ")],
+      ["Source",LIVE.meta.source]].map(([k,v])=>`<span class="k">${k}</span><span>${v}</span>`).join("");
+    const al=LIVE.events.find(e=>e.type==="alerte_chute");
+    document.getElementById("l-alert").innerHTML=al?`<div class="alert">⚠ CHUTE DÉTECTÉE à t = ${al.t.toFixed(1)} s</div>`:"";
+    document.getElementById("l-bars").innerHTML=META.groups.map(gg=>{const p=d.probs[gg];
+      return `<div class="bar"><span>${gg}</span><div class="track"><div class="fill" style="width:${(p*100).toFixed(1)}%;background:${gcol(gg)}"></div></div><span class="v">${Math.round(p*100)} %</span></div>`}).join("");
+  }
+  document.getElementById("l-log").innerHTML=LIVE.events.slice().reverse().map(e=>e.type==="alerte_chute"
+    ?`<div><b class="bad">${e.t.toFixed(1)} s · ALERTE CHUTE</b> (depuis ${e.de}) · vérité : ${truthAt(e.t)}</div>`
+    :`<div>${e.t.toFixed(1)} s · ${e.de} → <b style="color:${gcol(e.vers)}">${e.vers}</b> · vérité : ${truthAt(e.t)}</div>`).join("")||`<div style="color:var(--muted)">aucun changement d'état pour l'instant</div>`;
+  // chronologie
+  const [x,W,H]=fit(document.getElementById("ltl"));x.clearRect(0,0,W,H);
+  const D=LIVE.duration, X=t=>t/D*(W-70)+64, rowH=20;
+  x.font="11px system-ui";x.fillStyle=css("--muted");x.fillText("vérité",4,18);x.fillText("modèle",4,18+rowH+6);x.fillText("probas",4,80);
+  for(const [a,b,g] of LIVE.truth){x.fillStyle=gcol(g);x.fillRect(X(a),4,X(b)-X(a),rowH);
+    if(X(b)-X(a)>44){x.fillStyle="#fff";x.fillText(g,X(a)+4,18);}}
+  const T=LIVE.ticks, hop=0.1;
+  for(const r of T){x.fillStyle=r.etat==="analyse"?css("--grid"):gcol(r.etat);x.fillRect(X(r.t-hop),4+rowH+6,X(r.t)-X(r.t-hop)+0.6,rowH);
+    let y=H-18;const ph=H-18-(4+2*rowH+16);
+    for(const gg of META.groups){const h=r.probs[gg]*ph;if(h<0.3)continue;x.fillStyle=gcol(gg);x.fillRect(X(r.t-hop),y-h,X(r.t)-X(r.t-hop)+0.6,h);y-=h;}}
+  x.fillStyle=css("--bg");x.globalAlpha=0.5;x.fillRect(X(0),4+rowH+6,X(LIVE.warmup_s)-X(0),H);x.globalAlpha=1;
+  for(const e of LIVE.events)if(e.type==="alerte_chute"){x.strokeStyle=css("--bad");x.lineWidth=2;line(x,[X(e.t),0],[X(e.t),H-14]);}
+  if(d){x.strokeStyle=css("--ink");x.lineWidth=2;line(x,[X(d.t),0],[X(d.t),H-14]);}
+  x.fillStyle=css("--muted");for(let s=0;s<=D;s+=2)x.fillText(`${s}s`,X(s)-6,H-2);
+  // bilan
+  const sm=document.getElementById("l-summary");
+  if(LIVE.fin){const f=LIVE.fin;sm.hidden=false;
+    sm.innerHTML=`<h2>Bilan du test</h2>
+      <div class="kv"><span class="k">Accord avec la vérité (hors ${LIVE.warmup_s} s de démarrage)</span><span><b>${Math.round(f.accord*100)} %</b></span>
+      <span class="k">Par état</span><span>${Object.entries(f.par_etat).map(([k,v])=>`${k} ${Math.round(v*100)} %`).join(" · ")}</span>
+      <span class="k">Chute</span><span>${f.chute_verite_s==null?"pas de chute dans le scénario":`vraie à ${f.chute_verite_s} s`} · ${f.chute_alerte_s==null?'<span class="bad">aucune alerte</span>':`alerte à ${f.chute_alerte_s} s`} ${f.fausse_alerte?'<span class="bad">(fausse alerte / trop tôt)</span>':(f.chute_alerte_s!=null?'<span class="ok">✔</span>':"")}</span></div>
+      <table class="sum" style="margin-top:10px"><tr><th>Changement d'état (vérité)</th><th>début réel</th><th>détecté à</th><th>délai</th></tr>
+      ${f.changements.map(c=>`<tr><td>${c.etat}</td><td>${c.debut_verite_s} s</td><td>${c.detecte_s==null?'<span class="bad">non détecté</span>':c.detecte_s+" s"}</td><td>${c.delai_s==null?"–":c.delai_s+" s"}</td></tr>`).join("")}</table>
+      ${LIVE.meta.segments?`<div class="hint" style="padding:8px 0 0">Prises utilisées : ${LIVE.meta.segments.map(s=>`${s.etat} ← ${s.prise} [${s.debut_s}–${(s.debut_s+s.duree_s).toFixed(1)} s]`).join(" · ")}</div>`:""}`;}
+}
+
+init().catch(e=>{document.getElementById("main").innerHTML=`<div class="card span2 empty err">Serveur injoignable : ${e.message}</div>`});
+</script>
+</body>
+</html>

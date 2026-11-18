@@ -1,0 +1,40 @@
+{
+ "assis": [
+  "assis/p1/prise_001",
+  "assis/p1/prise_002",
+  "assis/p1/prise_004",
+  "assis/p1/prise_008",
+  "assis/p1/prise_011",
+  "assis/p1/prise_013",
+  "assis/p1/prise_020",
+  "assis/p1/prise_025",
+  "assis/p1/prise_032"
+ ],
+ "chute": [
+  "chute/p1/prise_001",
+  "chute/p1/prise_013",
+  "chute/p1/prise_019",
+  "chute/p1/prise_023",
+  "chute/p1/prise_024",
+  "chute/p1/prise_028",
+  "chute/p1/prise_031",
+  "chute/p1/prise_037",
+  "chute/p1/prise_041",
+  "chute/p1/prise_043"
+ ],
+ "debout": [
+  "debout/p1/prise_002",
+  "debout/p1/prise_003",
+  "debout/p1/prise_004",
+  "debout/p1/prise_006",
+  "debout/p1/prise_011",
+  "debout/p1/prise_016",
+  "debout/p1/prise_018",
+  "debout/p1/prise_047"
+ ],
+ "marche": [
+  "marche/p1/prise_005",
+  "marche/p1/prise_007",
+  "marche/p1/prise_015"
+ ]
+}

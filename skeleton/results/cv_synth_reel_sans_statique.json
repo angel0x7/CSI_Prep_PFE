@@ -1,0 +1,81 @@
+{
+  "config": "synth+reel_sans_statique",
+  "steps": 800,
+  "folds": 5,
+  "groups": [
+    "debout",
+    "assis",
+    "marche",
+    "chute",
+    "au_sol",
+    "vide"
+  ],
+  "real": {
+    "bin_acc": "0.876 ± 0.035",
+    "bin_bal_acc": "0.796 ± 0.038",
+    "take_acc": "0.947 ± 0.034",
+    "fall_detected": "50/50",
+    "fall_onset_abs_err_median_s": 0.7250000000000002,
+    "confusion_sum": [
+      [
+        4698,
+        594,
+        30,
+        106,
+        427,
+        0
+      ],
+      [
+        774,
+        5444,
+        3,
+        15,
+        63,
+        1
+      ],
+      [
+        0,
+        0,
+        2097,
+        0,
+        3,
+        0
+      ],
+      [
+        22,
+        4,
+        2,
+        101,
+        173,
+        0
+      ],
+      [
+        111,
+        66,
+        0,
+        48,
+        4821,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "synth_test": {
+    "mpjpe_mm": 315.8585266113281,
+    "pck_0_2": 0.31771378318769367,
+    "group_acc": 0.5835319894829097,
+    "mpjpe_mm_debout": 265.48927612304686,
+    "mpjpe_mm_assis": 303.3909057617187,
+    "mpjpe_mm_marche": 185.1336181640625,
+    "mpjpe_mm_chute": 370.94659423828125,
+    "mpjpe_mm_au_sol": 569.4019165039062,
+    "mpjpe_mm_baseline_debout": 453.7088317871094
+  }
+}

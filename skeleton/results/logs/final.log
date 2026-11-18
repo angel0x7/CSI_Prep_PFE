@@ -1,0 +1,19 @@
+  step    0  loss 9.486  (1s)
+  step  250  loss 4.715  (63s)
+  step  500  loss 3.555  (109s)
+  step  750  loss 3.435  (151s)
+  step 1000  loss 3.241  (199s)
+  step 1250  loss 3.201  (244s)
+  step 1499  loss 2.583  (288s)
+{
+ "mpjpe_mm": 358.32879638671875,
+ "pck_0_2": 0.3220902314414138,
+ "group_acc": 0.5817265556529361,
+ "mpjpe_mm_debout": 337.0256042480469,
+ "mpjpe_mm_assis": 270.9185791015625,
+ "mpjpe_mm_marche": 270.6047058105469,
+ "mpjpe_mm_chute": 392.751220703125,
+ "mpjpe_mm_au_sol": 611.5147094726562,
+ "mpjpe_mm_baseline_debout": 455.7144775390625
+}
+-> C:\Users\Micha\Desktop\PFE\CSI_Prep_PFE\skeleton\checkpoints\skeleton_tcn.pt (214444 paramètres)

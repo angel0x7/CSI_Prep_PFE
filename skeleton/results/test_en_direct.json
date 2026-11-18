@@ -1,0 +1,90 @@
+{
+ "reel": {
+  "marche → debout → marche → chute": {
+   "accord_moyen": 0.838,
+   "chutes_alertees": "5/5",
+   "fausses_alertes": 0,
+   "changements_detectes": "20/25",
+   "delai_median_s": 0.3
+  },
+  "marche → assis → chute": {
+   "accord_moyen": 0.87,
+   "chutes_alertees": "5/5",
+   "fausses_alertes": 0,
+   "changements_detectes": "15/20",
+   "delai_median_s": -0.1
+  },
+  "debout → marche → assis → debout → marche": {
+   "accord_moyen": 0.82,
+   "chutes_alertees": "0/0",
+   "fausses_alertes": 0,
+   "changements_detectes": "20/20",
+   "delai_median_s": 0.8
+  },
+  "assis → marche → debout → chute": {
+   "accord_moyen": 0.89,
+   "chutes_alertees": "5/5",
+   "fausses_alertes": 0,
+   "changements_detectes": "25/25",
+   "delai_median_s": -0.1
+  },
+  "marche → chute": {
+   "accord_moyen": 0.905,
+   "chutes_alertees": "5/5",
+   "fausses_alertes": 0,
+   "changements_detectes": "10/15",
+   "delai_median_s": -0.12
+  },
+  "debout → assis → debout → marche → chute": {
+   "accord_moyen": 0.811,
+   "chutes_alertees": "5/5",
+   "fausses_alertes": 0,
+   "changements_detectes": "25/30",
+   "delai_median_s": 0.8
+  }
+ },
+ "simule": {
+  "marche → debout → marche → chute": {
+   "accord_moyen": 0.386,
+   "chutes_alertees": "1/5",
+   "fausses_alertes": 4,
+   "changements_detectes": "13/20",
+   "delai_median_s": 1.7
+  },
+  "marche → assis → chute": {
+   "accord_moyen": 0.405,
+   "chutes_alertees": "0/5",
+   "fausses_alertes": 4,
+   "changements_detectes": "14/20",
+   "delai_median_s": 0.22
+  },
+  "debout → marche → assis → debout → marche": {
+   "accord_moyen": 0.283,
+   "chutes_alertees": "0/0",
+   "fausses_alertes": 5,
+   "changements_detectes": "13/20",
+   "delai_median_s": 2.7
+  },
+  "assis → marche → debout → chute": {
+   "accord_moyen": 0.455,
+   "chutes_alertees": "0/5",
+   "fausses_alertes": 5,
+   "changements_detectes": "13/20",
+   "delai_median_s": 0.27
+  },
+  "marche → chute": {
+   "accord_moyen": 0.7,
+   "chutes_alertees": "4/5",
+   "fausses_alertes": 0,
+   "changements_detectes": "10/10",
+   "delai_median_s": 1.52
+  },
+  "debout → assis → debout → marche → chute": {
+   "accord_moyen": 0.422,
+   "chutes_alertees": "0/5",
+   "fausses_alertes": 5,
+   "changements_detectes": "18/25",
+   "delai_median_s": 1.33
+  }
+ }
+}

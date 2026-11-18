@@ -1,0 +1,81 @@
+{
+  "config": "synth_seul_zero_shot",
+  "steps": 800,
+  "folds": 5,
+  "groups": [
+    "debout",
+    "assis",
+    "marche",
+    "chute",
+    "au_sol",
+    "vide"
+  ],
+  "real": {
+    "bin_acc": "0.315 ± 0.033",
+    "bin_bal_acc": "0.258 ± 0.027",
+    "take_acc": "0.389 ± 0.076",
+    "fall_detected": "37/50",
+    "fall_onset_abs_err_median_s": 1.1,
+    "confusion_sum": [
+      [
+        3737,
+        991,
+        107,
+        112,
+        875,
+        33
+      ],
+      [
+        2899,
+        255,
+        2254,
+        204,
+        687,
+        1
+      ],
+      [
+        197,
+        896,
+        305,
+        107,
+        595,
+        0
+      ],
+      [
+        47,
+        79,
+        58,
+        30,
+        88,
+        0
+      ],
+      [
+        428,
+        2617,
+        98,
+        47,
+        1853,
+        3
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "synth_test": {
+    "mpjpe_mm": 340.65504760742186,
+    "pck_0_2": 0.28918311510650774,
+    "group_acc": 0.5858369851007887,
+    "mpjpe_mm_debout": 316.70949096679686,
+    "mpjpe_mm_assis": 283.8235595703125,
+    "mpjpe_mm_marche": 274.954833984375,
+    "mpjpe_mm_chute": 359.77704467773435,
+    "mpjpe_mm_au_sol": 532.0800476074219,
+    "mpjpe_mm_baseline_debout": 453.7088317871094
+  }
+}

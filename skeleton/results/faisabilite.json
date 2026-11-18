@@ -1,0 +1,81 @@
+{
+ "17 points": {
+  "debout": {
+   "B0_debout": 75,
+   "B1_activite": 75,
+   "modele_CSI": 200,
+   "B2_oracle": 23
+  },
+  "assis": {
+   "B0_debout": 426,
+   "B1_activite": 67,
+   "modele_CSI": 308,
+   "B2_oracle": 62
+  },
+  "marche": {
+   "B0_debout": 109,
+   "B1_activite": 100,
+   "modele_CSI": 138,
+   "B2_oracle": 25
+  },
+  "chute": {
+   "B0_debout": 761,
+   "B1_activite": 414,
+   "modele_CSI": 334,
+   "B2_oracle": 51
+  },
+  "au_sol": {
+   "B0_debout": 1451,
+   "B1_activite": 181,
+   "modele_CSI": 618,
+   "B2_oracle": 149
+  },
+  "TOUT": {
+   "B0_debout": 420,
+   "B1_activite": 108,
+   "modele_CSI": 284,
+   "B2_oracle": 55
+  }
+ },
+ "10 points": {
+  "debout": {
+   "B0_debout": 67,
+   "B1_activite": 67,
+   "modele_CSI": 188,
+   "B2_oracle": 22
+  },
+  "assis": {
+   "B0_debout": 424,
+   "B1_activite": 63,
+   "modele_CSI": 302,
+   "B2_oracle": 59
+  },
+  "marche": {
+   "B0_debout": 105,
+   "B1_activite": 96,
+   "modele_CSI": 130,
+   "B2_oracle": 26
+  },
+  "chute": {
+   "B0_debout": 677,
+   "B1_activite": 365,
+   "modele_CSI": 300,
+   "B2_oracle": 47
+  },
+  "au_sol": {
+   "B0_debout": 1263,
+   "B1_activite": 184,
+   "modele_CSI": 550,
+   "B2_oracle": 158
+  },
+  "TOUT": {
+   "B0_debout": 382,
+   "B1_activite": 102,
+   "modele_CSI": 265,
+   "B2_oracle": 56
+  }
+ },
+ "taille_correlation": 0.018,
+ "phase_du_pas_juste_a_1_atome_pres": 0.241,
+ "phase_du_pas_hasard": 0.25
+}

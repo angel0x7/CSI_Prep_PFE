@@ -1,0 +1,76 @@
+== synth+reel
+  pli 0 : bin_acc 0.902  take_acc 0.933
+  pli 1 : bin_acc 0.944  take_acc 1.000
+  pli 2 : bin_acc 0.942  take_acc 1.000
+  pli 3 : bin_acc 0.935  take_acc 0.967
+  pli 4 : bin_acc 0.980  take_acc 1.000
+{
+ "real": {
+  "bin_acc": "0.941 \u00b1 0.025",
+  "bin_bal_acc": "0.832 \u00b1 0.028",
+  "take_acc": "0.980 \u00b1 0.027",
+  "fall_detected": "50/50",
+  "fall_onset_abs_err_median_s": 0.6499999999999999,
+  "confusion_sum": [
+   [
+    5141,
+    306,
+    0,
+    132,
+    276,
+    0
+   ],
+   [
+    163,
+    6137,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    2096,
+    1,
+    2,
+    0
+   ],
+   [
+    1,
+    0,
+    9,
+    94,
+    198,
+    0
+   ],
+   [
+    6,
+    11,
+    0,
+    67,
+    4962,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ]
+ },
+ "synth_test": {
+  "mpjpe_mm": 355.3428161621094,
+  "pck_0_2": 0.29066584773444265,
+  "group_acc": 0.5606091148115688,
+  "mpjpe_mm_debout": 289.52121887207034,
+  "mpjpe_mm_assis": 296.9568664550781,
+  "mpjpe_mm_marche": 252.59796752929688,
+  "mpjpe_mm_chute": 411.538916015625,
+  "mpjpe_mm_au_sol": 651.8431518554687,
+  "mpjpe_mm_baseline_debout": 453.7088317871094
+ }
+}

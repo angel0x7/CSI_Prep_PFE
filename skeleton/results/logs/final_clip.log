@@ -1,0 +1,19 @@
+  step    0  loss 9.506  (1s)
+  step  250  loss 4.414  (186s)
+  step  500  loss 3.278  (392s)
+  step  750  loss 3.614  (568s)
+  step 1000  loss 3.134  (654s)
+  step 1250  loss 3.055  (731s)
+  step 1499  loss 2.584  (793s)
+{
+ "mpjpe_mm": 284.1787414550781,
+ "pck_0_2": 0.3962392515145593,
+ "group_acc": 0.6285851226993865,
+ "mpjpe_mm_debout": 199.96359252929688,
+ "mpjpe_mm_assis": 307.60125732421875,
+ "mpjpe_mm_marche": 138.1689453125,
+ "mpjpe_mm_chute": 334.3304138183594,
+ "mpjpe_mm_au_sol": 617.73583984375,
+ "mpjpe_mm_baseline_debout": 419.96868896484375
+}
+-> C:\Users\Micha\Desktop\PFE\CSI_Prep_PFE\skeleton\checkpoints\skeleton_clip.pt (251692 paramètres)
