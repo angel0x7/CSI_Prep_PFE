@@ -1,0 +1,12 @@
+# Module squelette + interface (Python 3.12). PyTorch en version CPU (pas besoin de GPU).
+#   python -m venv venv
+#   venv\Scripts\python.exe -m pip install -r skeleton\requirements.txt
+--extra-index-url https://download.pytorch.org/whl/cpu
+numpy==2.5.5
+scipy==1.18.1
+pandas==3.1.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+pillow==13.0.0
+torch==2.15.0+cpu
+pyserial>=3.4

@@ -19,8 +19,8 @@ from .poses import SKELETON
 
 LEFT = {1, 3, 5, 7, 9, 11, 13, 15}
 RIGHT = {2, 4, 6, 8, 10, 12, 14, 16}
-GROUP_COLORS = {"vide": "#9aa0a6", "debout": "#3b82f6", "assis": "#10b981", "marche": "#8b5cf6",
-                "chute": "#ef4444", "au_sol": "#f59e0b"}
+GROUP_COLORS = {"vide": "#9a9890", "debout": "#2a78d6", "assis": "#1baf7a", "marche": "#6250d6",
+                "chute": "#e34948", "au_sol": "#008300"}
 
 
 def project(kp, yaw=-0.7, pitch=0.22):

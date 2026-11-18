@@ -1,0 +1,13 @@
+reel | marche → debout → marche → chute | {'accord_moyen': 0.886, 'chutes_alertees': '5/5', 'fausses_alertes': 0, 'changements_detectes': '20/25', 'delai_median_s': 0.15}
+reel | marche → assis → chute | {'accord_moyen': 0.897, 'chutes_alertees': '5/5', 'fausses_alertes': 0, 'changements_detectes': '15/20', 'delai_median_s': -0.1}
+reel | debout → marche → assis → debout → marche | {'accord_moyen': 0.892, 'chutes_alertees': '0/0', 'fausses_alertes': 0, 'changements_detectes': '20/20', 'delai_median_s': 0.4}
+reel | assis → marche → debout → chute | {'accord_moyen': 0.93, 'chutes_alertees': '5/5', 'fausses_alertes': 0, 'changements_detectes': '25/25', 'delai_median_s': -0.1}
+reel | marche → chute | {'accord_moyen': 0.905, 'chutes_alertees': '5/5', 'fausses_alertes': 0, 'changements_detectes': '10/15', 'delai_median_s': -0.12}
+reel | debout → assis → debout → marche → chute | {'accord_moyen': 0.869, 'chutes_alertees': '5/5', 'fausses_alertes': 0, 'changements_detectes': '25/30', 'delai_median_s': 0.5}
+simule | marche → debout → marche → chute | {'accord_moyen': 0.407, 'chutes_alertees': '0/5', 'fausses_alertes': 5, 'changements_detectes': '14/20', 'delai_median_s': 1.55}
+simule | marche → assis → chute | {'accord_moyen': 0.41, 'chutes_alertees': '0/5', 'fausses_alertes': 5, 'changements_detectes': '15/20', 'delai_median_s': 0.4}
+simule | debout → marche → assis → debout → marche | {'accord_moyen': 0.356, 'chutes_alertees': '0/0', 'fausses_alertes': 5, 'changements_detectes': '13/20', 'delai_median_s': 1.4}
+simule | assis → marche → debout → chute | {'accord_moyen': 0.483, 'chutes_alertees': '0/5', 'fausses_alertes': 5, 'changements_detectes': '14/20', 'delai_median_s': 0.6}
+simule | marche → chute | {'accord_moyen': 0.61, 'chutes_alertees': '5/5', 'fausses_alertes': 0, 'changements_detectes': '10/10', 'delai_median_s': 1.55}
+simule | debout → assis → debout → marche → chute | {'accord_moyen': 0.432, 'chutes_alertees': '0/5', 'fausses_alertes': 5, 'changements_detectes': '21/25', 'delai_median_s': 1.3}
+-> C:\Users\Micha\Desktop\PFE\CSI_Prep_PFE\skeleton\results\test_en_direct.json

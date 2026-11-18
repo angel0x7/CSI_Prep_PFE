@@ -1,28 +1,28 @@
 {
  "reel": {
   "marche → debout → marche → chute": {
-   "accord_moyen": 0.838,
+   "accord_moyen": 0.886,
    "chutes_alertees": "5/5",
    "fausses_alertes": 0,
    "changements_detectes": "20/25",
-   "delai_median_s": 0.3
+   "delai_median_s": 0.15
   },
   "marche → assis → chute": {
-   "accord_moyen": 0.87,
+   "accord_moyen": 0.897,
    "chutes_alertees": "5/5",
    "fausses_alertes": 0,
    "changements_detectes": "15/20",
    "delai_median_s": -0.1
   },
   "debout → marche → assis → debout → marche": {
-   "accord_moyen": 0.82,
+   "accord_moyen": 0.892,
    "chutes_alertees": "0/0",
    "fausses_alertes": 0,
    "changements_detectes": "20/20",
-   "delai_median_s": 0.8
+   "delai_median_s": 0.4
   },
   "assis → marche → debout → chute": {
-   "accord_moyen": 0.89,
+   "accord_moyen": 0.93,
    "chutes_alertees": "5/5",
    "fausses_alertes": 0,
    "changements_detectes": "25/25",
@@ -36,55 +36,55 @@
    "delai_median_s": -0.12
   },
   "debout → assis → debout → marche → chute": {
-   "accord_moyen": 0.811,
+   "accord_moyen": 0.869,
    "chutes_alertees": "5/5",
    "fausses_alertes": 0,
    "changements_detectes": "25/30",
-   "delai_median_s": 0.8
+   "delai_median_s": 0.5
   }
  },
  "simule": {
   "marche → debout → marche → chute": {
-   "accord_moyen": 0.386,
-   "chutes_alertees": "1/5",
-   "fausses_alertes": 4,
-   "changements_detectes": "13/20",
-   "delai_median_s": 1.7
+   "accord_moyen": 0.407,
+   "chutes_alertees": "0/5",
+   "fausses_alertes": 5,
+   "changements_detectes": "14/20",
+   "delai_median_s": 1.55
   },
   "marche → assis → chute": {
-   "accord_moyen": 0.405,
+   "accord_moyen": 0.41,
    "chutes_alertees": "0/5",
-   "fausses_alertes": 4,
-   "changements_detectes": "14/20",
-   "delai_median_s": 0.22
+   "fausses_alertes": 5,
+   "changements_detectes": "15/20",
+   "delai_median_s": 0.4
   },
   "debout → marche → assis → debout → marche": {
-   "accord_moyen": 0.283,
+   "accord_moyen": 0.356,
    "chutes_alertees": "0/0",
    "fausses_alertes": 5,
    "changements_detectes": "13/20",
-   "delai_median_s": 2.7
+   "delai_median_s": 1.4
   },
   "assis → marche → debout → chute": {
-   "accord_moyen": 0.455,
+   "accord_moyen": 0.483,
    "chutes_alertees": "0/5",
    "fausses_alertes": 5,
-   "changements_detectes": "13/20",
-   "delai_median_s": 0.27
+   "changements_detectes": "14/20",
+   "delai_median_s": 0.6
   },
   "marche → chute": {
-   "accord_moyen": 0.7,
-   "chutes_alertees": "4/5",
+   "accord_moyen": 0.61,
+   "chutes_alertees": "5/5",
    "fausses_alertes": 0,
    "changements_detectes": "10/10",
-   "delai_median_s": 1.52
+   "delai_median_s": 1.55
   },
   "debout → assis → debout → marche → chute": {
-   "accord_moyen": 0.422,
+   "accord_moyen": 0.432,
    "chutes_alertees": "0/5",
    "fausses_alertes": 5,
-   "changements_detectes": "18/25",
-   "delai_median_s": 1.33
+   "changements_detectes": "21/25",
+   "delai_median_s": 1.3
   }
  }
 }

@@ -45,6 +45,8 @@ class Backend(object):
         else:
             self.live_model = self.models["temps_reel"]
             self.live_model_name = "modèle principal (ATTENTION : a vu toutes les prises réelles)"
+        if os.path.exists(HOLDOUT_CKPT):
+            self.models["test_honnete"] = self.live_model
         self.cache = {}
         self.lock = threading.Lock()
         self.video_lock = threading.Lock()
@@ -72,7 +74,12 @@ class Backend(object):
                 rows.append({"path": r.chemin, "activity": r.activite, "persons": int(r.personnes),
                              "quality": q, "augmented": bool(r.get("augmentee", False)) if "augmentee" in idx.columns else False})
             out[ds] = rows
-        return {"datasets": out, "groups": cfg.GROUPS, "modes": list(self.models),
+        try:
+            from .holdout import holdout_takes
+            held = sorted(t for v in holdout_takes().values() for t in v)
+        except FileNotFoundError:
+            held = []
+        return {"datasets": out, "groups": cfg.GROUPS, "modes": list(self.models), "holdout": held,
                 "room": {"L": cfg.ROOM_L, "W": cfg.ROOM_W, "rx": cfg.RX_POS, "tx": cfg.TX_POS}}
 
     # ------------------------------------------------------------------ prédiction
@@ -104,6 +111,25 @@ class Backend(object):
         with self.lock:
             self.cache[key] = res
         return res
+
+    def results(self):
+        """Tous les résultats de test enregistrés (skeleton/results/*.json), avec leur date de calcul."""
+        import datetime
+        rdir = os.path.join(HERE, "results")
+        out = {"cv": {}, "autres": {}}
+        for f in sorted(os.listdir(rdir)):
+            if not f.endswith(".json"):
+                continue
+            path = os.path.join(rdir, f)
+            with open(path, encoding="utf-8") as fh:
+                data = json.load(fh)
+            stamp = datetime.datetime.fromtimestamp(os.path.getmtime(path)).strftime("%d/%m/%Y %H:%M")
+            item = {"fichier": "skeleton/results/" + f, "date": stamp, "data": data}
+            if f.startswith("cv_"):
+                out["cv"][f[3:-5]] = item
+            else:
+                out["autres"][f[:-5]] = item
+        return out
 
     def presets(self):
         from .sequences import PRESETS, STATES
@@ -257,6 +283,8 @@ def make_handler(backend):
                 if u.path == "/api/predict":
                     return self._send(200, json.dumps(backend.predict(q["ds"][0], q["take"][0],
                                                                       q.get("mode", [None])[0])))
+                if u.path == "/api/results":
+                    return self._send(200, json.dumps(backend.results(), ensure_ascii=False))
                 if u.path == "/api/presets":
                     return self._send(200, json.dumps(backend.presets(), ensure_ascii=False))
                 if u.path == "/api/live":

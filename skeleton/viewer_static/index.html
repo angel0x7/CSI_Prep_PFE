@@ -8,12 +8,16 @@
 :root{
   --bg:#f6f7f9; --panel:#ffffff; --ink:#1c2026; --muted:#6b7280; --line:#e3e6ea; --accent:#2563eb;
   --grid:#e9ecef; --sel:#eef3ff; --ok:#059669; --bad:#dc2626;
-  --g-vide:#9aa0a6; --g-debout:#3b82f6; --g-assis:#10b981; --g-marche:#8b5cf6; --g-chute:#ef4444; --g-au_sol:#f59e0b;
+  /* activités : palette de référence validée (validate_palette.js, ordre d'empilement) */
+  --g-vide:#9a9890; --g-debout:#2a78d6; --g-assis:#1baf7a; --g-marche:#6250d6; --g-chute:#e34948; --g-au_sol:#008300;
+  --viz-1:#2a78d6; --warn:#eda100;
   --left:#2563eb; --right:#ea580c; --center:#475569;
 }
 @media (prefers-color-scheme: dark){
   :root{ --bg:#0f1216; --panel:#171b21; --ink:#e6e9ee; --muted:#9aa3ae; --line:#272d36; --accent:#60a5fa;
-         --grid:#232932; --sel:#1d2a44; --center:#cbd5e1; --left:#60a5fa; --right:#fb923c; }
+         --grid:#232932; --sel:#1d2a44; --center:#cbd5e1; --left:#60a5fa; --right:#fb923c;
+         --g-vide:#6f6e68; --g-debout:#3987e5; --g-assis:#199e70; --g-marche:#9085e9; --g-chute:#e66767; --g-au_sol:#0ca30c;
+         --viz-1:#3987e5; --warn:#c98500; }
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -26,6 +30,7 @@ aside{border-right:1px solid var(--line);background:var(--panel);display:flex;fl
 .filters{padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;border-bottom:1px solid var(--line)}
 .filters select,.filters input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
 .filters .full{grid-column:1/3}
+.filters input[type=checkbox]{width:auto;margin:0}
 #list{overflow:auto;flex:1;min-height:0}
 .item{padding:7px 12px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;align-items:center;gap:8px}
 .item:hover{background:var(--sel)}
@@ -64,7 +69,7 @@ canvas{display:block;width:100%}
 .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
 .legend span{display:inline-flex;align-items:center;gap:5px}
 .empty{color:var(--muted);padding:40px;text-align:center}
-.warn{background:color-mix(in srgb,var(--g-au_sol) 15%,transparent);border:1px solid color-mix(in srgb,var(--g-au_sol) 40%,transparent);padding:8px 10px;border-radius:8px;font-size:12.5px;margin-top:8px}
+.warn{background:color-mix(in srgb,var(--warn) 15%,transparent);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);padding:8px 10px;border-radius:8px;font-size:12.5px;margin-top:8px}
 .err{color:var(--bad)}
 .tabs{display:flex;gap:4px;margin-left:auto}
 .tabs button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:6px 14px;font:inherit;cursor:pointer}
@@ -88,6 +93,39 @@ table.sum{border-collapse:collapse;font-size:12.5px;width:100%}
 table.sum td,table.sum th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left}
 #lsk{height:380px;cursor:grab}
 #ltl{height:170px}
+#res-main{overflow:auto;padding:14px;display:grid;gap:14px;grid-column:1/3;align-content:start;grid-template-columns:minmax(0,1fr)}
+.res-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.res-card h2{font-size:15px;margin:0 0 4px;font-weight:650}
+.res-card .what{color:var(--muted);font-size:12.5px;margin:0 0 12px;max-width:980px}
+.src{color:var(--muted);font-size:11.5px;margin-top:10px}
+.callout{border-left:4px solid var(--g-chute);background:color-mix(in srgb,var(--g-chute) 8%,var(--panel))}
+.callout ul{margin:6px 0 0;padding-left:18px;font-size:13px}.callout li{margin:3px 0}
+.hbar{display:grid;grid-template-columns:270px 1fr 92px;gap:10px;align-items:center;font-size:12.5px;padding:3px 0}
+.hbar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbar .tr{position:relative;height:16px}
+.hbar .gl{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--grid)}
+.hbar .ch{position:absolute;top:-5px;bottom:-5px;border-left:1.5px dashed var(--muted)}
+.hbar .b{position:absolute;left:0;top:3px;height:10px;background:var(--viz-1);border-radius:0 4px 4px 0}
+.hbar .w{position:absolute;top:7px;height:2px;background:var(--ink);opacity:.55}
+.hbar .w::before,.hbar .w::after{content:"";position:absolute;top:-3px;width:2px;height:8px;background:var(--ink)}
+.hbar .w::after{right:0}.hbar .v{font-variant-numeric:tabular-nums;color:var(--ink)}
+.hbar.main .nm{font-weight:650}
+.axis{display:grid;grid-template-columns:270px 1fr 92px;gap:10px;font-size:11px;color:var(--muted)}
+.axis .tk{position:relative;height:14px}.axis .tk span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+table.rt{border-collapse:collapse;font-size:12.5px;width:100%;font-variant-numeric:tabular-nums}
+table.rt th{text-align:left;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);padding:5px 8px}
+table.rt td{border-bottom:1px solid var(--line);padding:5px 8px;white-space:nowrap}
+table.rt tr.main td{font-weight:650}
+.cm{display:grid;gap:2px;font-size:12px;font-variant-numeric:tabular-nums}
+.cm .c{height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:4px}
+.cm .c small{opacity:.8;font-size:10.5px}
+.cm .h{color:var(--muted);display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px}
+.cm .r{color:var(--muted);display:flex;align-items:center;justify-content:flex-end;padding-right:8px}
+.inl{display:inline-block;height:8px;background:var(--viz-1);border-radius:0 4px 4px 0;vertical-align:middle;margin-right:6px}
+#tt{position:fixed;pointer-events:none;background:var(--ink);color:var(--panel);font-size:12px;padding:6px 9px;border-radius:6px;max-width:320px;z-index:50;line-height:1.35}
+details summary{cursor:pointer;color:var(--muted);font-size:12.5px;margin-top:10px}
+.badge.test{border-color:var(--accent);color:var(--accent)}
+.okbox{background:color-mix(in srgb,var(--ok) 12%,transparent);border:1px solid color-mix(in srgb,var(--ok) 40%,transparent);padding:8px 10px;border-radius:8px;font-size:12.5px;margin-top:8px}
 @media (max-width:900px){.app{grid-template-columns:1fr}aside{max-height:40vh}main{grid-template-columns:1fr}.span2{grid-column:auto}}
 </style>
 </head>
@@ -95,7 +133,7 @@ table.sum td,table.sum th{border-bottom:1px solid var(--line);padding:4px 6px;te
 <header>
   <h1>Visualiseur squelette CSI</h1>
   <span class="sub">4 récepteurs ESP32-S3 · modèle SkeletonTCN · COCO-17 · <span id="hdr-info"></span></span>
-  <div class="tabs"><button id="tab-takes" class="on">Prises enregistrées</button><button id="tab-live">Test en direct</button></div>
+  <div class="tabs"><button id="tab-takes" class="on">Prises enregistrées</button><button id="tab-live">Test en direct</button><button id="tab-res">Résultats</button></div>
 </header>
 <div class="app">
   <aside>
@@ -104,10 +142,12 @@ table.sum td,table.sum th{border-bottom:1px solid var(--line);padding:4px 6px;te
       <select id="mode" class="full" title="Mode d'analyse">
         <option value="prise_entiere">Analyse de la prise entière (8 s, comme une vidéo)</option>
         <option value="temps_reel">Temps réel (passé uniquement, comme le dashboard)</option>
+        <option value="test_honnete">Test honnête : modèle qui n'a jamais vu les prises marquées « test »</option>
       </select>
       <select id="f-act" title="Activité"><option value="">toutes activités</option></select>
       <select id="f-p" title="Personnes"><option value="1">1 personne</option><option value="">toutes</option></select>
       <input id="f-q" class="full" placeholder="Rechercher (ex. prise_010, aug)">
+      <label class="full" style="font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center"><input type="checkbox" id="f-test"> prises de test uniquement (jamais vues par le modèle de test)</label>
     </div>
     <div class="count" id="count"></div>
     <div id="list"></div>
@@ -133,10 +173,12 @@ table.sum td,table.sum th{border-bottom:1px solid var(--line);padding:4px 6px;te
     <button class="run" id="l-run">▶ Lancer le test</button>
     <div class="hint" id="l-hint"></div>
   </aside>
+  <main id="res-main" hidden><div class="res-card">Chargement des résultats…</div></main>
   <main id="live-main" hidden>
     <div class="card span2 empty">Composez un scénario à gauche puis cliquez sur « Lancer le test ». Les trames CSI sont rejouées au rythme réel, comme si elles arrivaient des ESP32, et le modèle temps réel classe l'état en direct.</div>
   </main>
 </div>
+<div id="tt" hidden></div>
 <template id="ltpl">
   <div class="card">
     <h2>Squelette en direct <span id="l-gtnote" style="text-transform:none;letter-spacing:0;font-weight:400">· pointillés = vérité (simulation)</span></h2>
@@ -232,7 +274,7 @@ async function init(){
   }
   const acts=new Set();Object.values(META.datasets).flat().forEach(r=>acts.add(r.activity));
   const fa=document.getElementById("f-act");[...acts].sort().forEach(a=>{const o=document.createElement("option");o.value=a;o.textContent=a;fa.appendChild(o)});
-  ["ds","f-act","f-p"].forEach(id=>document.getElementById(id).onchange=renderList);
+  ["ds","f-act","f-p","f-test"].forEach(id=>document.getElementById(id).onchange=renderList);
   const md=document.getElementById("mode");
   [...md.options].forEach(o=>{if(!META.modes.includes(o.value))o.disabled=true,o.textContent+=" — modèle absent"});
   if(!META.modes.includes(md.value))md.value=META.modes[0];
@@ -249,13 +291,15 @@ async function init(){
 function renderList(){
   const ds=document.getElementById("ds").value, a=document.getElementById("f-act").value,
         p=document.getElementById("f-p").value, q=document.getElementById("f-q").value.toLowerCase();
-  const rows=(META.datasets[ds]||[]).filter(r=>(!a||r.activity===a)&&(!p||String(r.persons)===p||(p==="1"&&r.persons===0))&&(!q||r.path.toLowerCase().includes(q)));
+  const ft=document.getElementById("f-test").checked;
+  const rows=(META.datasets[ds]||[]).filter(r=>(!a||r.activity===a)&&(!p||String(r.persons)===p||(p==="1"&&r.persons===0))&&(!q||r.path.toLowerCase().includes(q))&&(!ft||(ds!=="DATASET_SYNTH"&&isHeld(r.path))));
   document.getElementById("count").textContent=`${rows.length} prise(s)`;
   const L=document.getElementById("list");L.innerHTML="";
   for(const r of rows){
     const d=document.createElement("div");d.className="item";if(CUR&&CUR.ds===ds&&CUR.path===r.path)d.classList.add("active");
+    const tb=ds!=="DATASET_SYNTH"&&isHeld(r.path)?`<span class="badge test">test</span>`:"";
     const badge=r.augmented?"augmentée":(r.quality==="inutilisable"?"inutilisable":(r.persons>1?`${r.persons} pers.`:(r.quality==="simulee"?"simulée":"")));
-    d.innerHTML=`<i class="dot" style="background:${gcol(r.activity==="chute"?"chute":r.activity)}"></i><span class="name">${r.path}</span>${badge?`<span class="badge">${badge}</span>`:""}`;
+    d.innerHTML=`<i class="dot" style="background:${gcol(r.activity==="chute"?"chute":r.activity)}"></i><span class="name">${r.path}</span>${tb}${badge?`<span class="badge">${badge}</span>`:""}`;
     d.onclick=()=>{document.querySelectorAll(".item.active").forEach(e=>e.classList.remove("active"));d.classList.add("active");open(ds,r.path)};
     L.appendChild(d);
   }
@@ -413,8 +457,14 @@ function drawPanel(f){
   const w=[];
   if(DATA.warmup_s>0&&i<WARM())w.push("Mode temps réel, début de prise : le modèle n'a pas encore 3 s de passé, prédiction moins fiable. Le mode « prise entière » n'a pas ce problème.");
   if(DATA.persons>1)w.push(`Prise à ${DATA.persons} personnes : le modèle actuel est prévu pour 1 personne.`);
+  let hon="";
+  if(CUR.ds!=="DATASET_SYNTH"){
+    if(CUR.mode!=="test_honnete")w.push("Démonstration, pas un test : ce modèle a été entraîné sur toutes les vraies prises, y compris celle-ci. Pour un test, choisissez le mode « Test honnête » et une prise marquée « test ».");
+    else if(!isHeld(CUR.path))w.push("Pas un test : cette prise a servi à entraîner le modèle de test. Choisissez une prise marquée « test ».");
+    else hon=`<div class="okbox">✔ Test honnête : le modèle de test n'a jamais vu cette prise (ni ses copies augmentées).</div>`;
+  }
   if(tr.kind&&tr.kind.startsWith("faible"))w.push("Pas de caméra : le squelette réel n'est pas connu. Seule l'activité peut être vérifiée.");
-  document.getElementById("warn").innerHTML=w.map(t=>`<div class="warn">${t}</div>`).join("");
+  document.getElementById("warn").innerHTML=hon+w.map(t=>`<div class="warn">${t}</div>`).join("");
 }
 
 // ------------------------------------------------------------------ salle
@@ -474,14 +524,19 @@ function drawEnergy(){
 
 // ================================================================== TEST EN DIRECT
 let LP=null, LIVE=null, lyaw=-0.7;
-function setTab(live){
-  document.getElementById("tab-live").classList.toggle("on",live);document.getElementById("tab-takes").classList.toggle("on",!live);
-  document.querySelector("aside:not(#live-aside)").hidden=live;document.getElementById("main").hidden=live;
-  document.getElementById("live-aside").hidden=!live;document.getElementById("live-main").hidden=!live;
-  if(live){playing=false;if(!LP)liveInit();}
+function setTab(name){
+  for(const t of ["takes","live","res"])document.getElementById("tab-"+t).classList.toggle("on",t===name);
+  document.querySelector("aside:not(#live-aside)").hidden=name!=="takes";document.getElementById("main").hidden=name!=="takes";
+  document.getElementById("live-aside").hidden=name!=="live";document.getElementById("live-main").hidden=name!=="live";
+  document.getElementById("res-main").hidden=name!=="res";
+  if(name!=="takes")playing=false;
+  if(name==="live"&&!LP)liveInit();
+  if(name==="res")resInit();
 }
-document.getElementById("tab-takes").onclick=()=>setTab(false);
-document.getElementById("tab-live").onclick=()=>setTab(true);
+document.getElementById("tab-takes").onclick=()=>setTab("takes");
+document.getElementById("tab-live").onclick=()=>setTab("live");
+document.getElementById("tab-res").onclick=()=>setTab("res");
+const isHeld=p=>!!((META&&META.holdout)||[]).find(h=>p===h||p.startsWith(h+"_aug"));
 let STEPS=[];
 async function liveInit(){
   LP=await api("/api/presets");
@@ -588,6 +643,109 @@ function liveDraw(){
       ${f.changements.map(c=>`<tr><td>${c.etat}</td><td>${c.debut_verite_s} s</td><td>${c.detecte_s==null?'<span class="bad">non détecté</span>':c.detecte_s+" s"}</td><td>${c.delai_s==null?"–":c.delai_s+" s"}</td></tr>`).join("")}</table>
       ${LIVE.meta.segments?`<div class="hint" style="padding:8px 0 0">Prises utilisées : ${LIVE.meta.segments.map(s=>`${s.etat} ← ${s.prise} [${s.debut_s}–${(s.debut_s+s.duree_s).toFixed(1)} s]`).join(" · ")}</div>`:""}`;}
 }
+
+// ================================================================== RÉSULTATS
+let RES=null;
+const CV_INFO={
+  "synth_reel_prise_entiere__real_aug":["Prise entière (8 s), simulé + réel augmenté","modèle par défaut de l'interface",true],
+  "synth_reel":["Temps réel, simulé + réel","modèle du test en direct (version de base)",true],
+  "reel_seul":["Temps réel, réel seul","",false],
+  "reel_seul_dyn_seul":["Réel seul, mouvement uniquement","sans forme statique, niveau ni pertes",false],
+  "synth_reel_sans_statique":["Simulé + réel, sans forme statique","",false],
+  "synth_reel_dyn_seul":["Simulé + réel, mouvement uniquement","",false],
+  "synth_seul_zero_shot":["Simulé seul (n'a jamais vu de vraie prise)","",false]};
+const pm=s=>{const m=String(s).match(/([\d.]+)\s*±\s*([\d.]+)/);return m?[+m[1],+m[2]]:[+s,0]};
+const pc=v=>`${Math.round(v*100)} %`;
+async function resInit(){
+  const m=document.getElementById("res-main");
+  try{RES=await api("/api/results");}catch(e){m.innerHTML=`<div class="res-card err">Erreur : ${e.message}</div>`;return;}
+  renderResults();
+}
+function hbars(rows,{chance=null}={}){
+  // rows: [{name, sub, v, sd, main, tt}] ; échelle 0–100 %
+  const ticks=[0,.25,.5,.75,1];
+  return `<div class="axis"><span></span><div class="tk">${ticks.map(t=>`<span style="left:${t*100}%">${t*100} %</span>`).join("")}</div><span></span></div>`+
+   rows.map(r=>`<div class="hbar${r.main?" main":""}" data-tt="${r.tt}">
+    <div class="nm" title="${r.name}">${r.name}${r.sub?` <small>· ${r.sub}</small>`:""}</div>
+    <div class="tr">${ticks.map(t=>`<i class="gl" style="left:${t*100}%"></i>`).join("")}
+      ${chance!=null?`<i class="ch" style="left:${chance*100}%"></i>`:""}
+      <i class="b" style="width:${Math.max(0.5,r.v*100)}%"></i>
+      ${r.sd>0?`<i class="w" style="left:${Math.max(0,r.v-r.sd)*100}%;width:${(Math.min(1,r.v+r.sd)-Math.max(0,r.v-r.sd))*100}%"></i>`:""}</div>
+    <div class="v">${pc(r.v)}${r.sd>0?` <span style="color:var(--muted)">± ${Math.round(r.sd*100)}</span>`:""}</div></div>`).join("");
+}
+function confusion(key){
+  const d=RES.cv[key].data, labs=d.groups, M=d.real.confusion_sum;
+  const rowsIdx=labs.map((_,i)=>i).filter(i=>M[i].reduce((a,b)=>a+b,0)>0);
+  let h=`<div class="cm" style="grid-template-columns:90px repeat(${labs.length},minmax(52px,1fr))"><div></div>`+
+    labs.map(l=>`<div class="h">${l}</div>`).join("");
+  for(const i of rowsIdx){
+    const tot=M[i].reduce((a,b)=>a+b,0);
+    h+=`<div class="r">${labs[i]}</div>`+M[i].map((c,j)=>{const f=c/tot;
+      const bg=`color-mix(in oklab, var(--viz-1) ${Math.round(f*100)}%, var(--panel))`;
+      const fg=f>0.55?"#fff":"var(--ink)";
+      return `<div class="c" style="background:${bg};color:${fg};${i===j?"outline:2px solid var(--ink);outline-offset:-2px":""}"
+        data-tt="vraie activité : <b>${labs[i]}</b><br>prédite : <b>${labs[j]}</b><br>${c} bins de 50 ms sur ${tot} (${(f*100).toFixed(1)} %)">${f>=0.005?pc(f):"·"}<small>${c}</small></div>`}).join("");
+  }
+  return h+`</div>`;
+}
+function renderResults(){
+  const m=document.getElementById("res-main"), cv=RES.cv, A=RES.autres;
+  const keys=Object.keys(CV_INFO).filter(k=>cv[k]);
+  const rowsOf=metric=>keys.map(k=>{const [v,sd]=pm(cv[k].data.real[metric]);const [n,sub,main]=CV_INFO[k];
+      return {k,name:n,sub,v,sd,main,tt:`<b>${n}</b><br>${metric==="take_acc"?"prises bien classées":"précision équilibrée par bin"} : ${pc(v)} ± ${Math.round(sd*100)} (5 plis)<br>${cv[k].fichier}`}})
+    .sort((a,b)=>b.v-a.v);
+  const ta=rowsOf("take_acc"), order=ta.map(r=>r.k), ba=rowsOf("bin_bal_acc").sort((a,b)=>order.indexOf(a.k)-order.indexOf(b.k));
+  const cmKey=cv["synth_reel_prise_entiere__real_aug"]?"synth_reel_prise_entiere__real_aug":keys[0];
+  let h=`<div class="res-card callout"><h2>À lire avant les chiffres</h2>
+   <ul><li><b>Une seule séance</b> (10/11), <b>une seule salle</b>, très probablement <b>une seule personne</b> : la généralisation à d'autres personnes, jours ou lieux <b>n'est pas mesurée</b>.</li>
+   <li>Chaque activité a été enregistrée <b>en un seul bloc, au même endroit</b> : le modèle peut en partie reconnaître le bloc plutôt que la posture.</li>
+   <li>Pour les chutes, l'<b>instant</b> de chute est <b>estimé</b> par algorithme (pas mesuré).</li>
+   <li>Le test en direct utilise des <b>montages</b> de prises (raccords artificiels), et son réglage a été choisi sur ces mêmes montages.</li>
+   <li>Peu de marche : 15 prises au total, 3 dans les tests en direct.</li></ul></div>`;
+  h+=`<div class="res-card"><h2>1 · Validation croisée sur les vraies prises</h2>
+   <p class="what">149 prises à 1 personne. 5 plis : à chaque fois le modèle est entraîné sur 80 % des prises et testé sur les 20 % qu'il n'a jamais vues (une prise et ses copies augmentées restent du même côté). Barre = moyenne des 5 plis, trait = ± écart-type, pointillés = hasard (4 activités : 25 %).</p>
+   <h3 style="font-size:13px;margin:6px 0">Prises bien classées</h3>${hbars(ta,{chance:.25})}
+   <h3 style="font-size:13px;margin:16px 0 6px">Précision équilibrée par bin de 50 ms (moyenne des 5 classes, plus sévère ; hasard 20 %)</h3>${hbars(ba,{chance:.2})}
+   <details><summary>Tableau détaillé</summary><table class="rt" style="margin-top:8px"><tr><th>Configuration</th><th>Prises</th><th>Bins</th><th>Équilibrée</th><th>Chutes détectées</th><th>Écart instant de chute (médiane)</th><th>Calculé le</th></tr>
+   ${ta.map(r=>{const d=cv[r.k].data.real;return `<tr class="${r.main?"main":""}"><td>${r.name}</td><td>${d.take_acc}</td><td>${d.bin_acc}</td><td>${d.bin_bal_acc}</td><td>${d.fall_detected}</td><td>${d.fall_onset_abs_err_median_s==null?"–":d.fall_onset_abs_err_median_s.toFixed(2)+" s"}</td><td>${cv[r.k].date}</td></tr>`}).join("")}</table></details>
+   <p class="what" style="margin-top:12px"><b>Lecture :</b> « mouvement uniquement » reste haut, donc le modèle ne se contente pas de l'empreinte statique de chaque bloc ; « simulé seul » est faible : le simulateur ne suffit pas pour reconnaître le réel.</p>
+   <div class="src">Sources : skeleton/results/cv_*.json</div></div>`;
+  h+=`<div class="res-card"><h2>2 · Où le modèle se trompe : matrice de confusion</h2>
+   <p class="what">Cumul des 5 plis, en bins de 50 ms (zones de transition des chutes exclues). Ligne = vraie activité, colonne = activité prédite ; une ligne fait 100 %. Diagonale encadrée = bonnes réponses.</p>
+   <label style="font-size:12.5px;color:var(--muted)">Configuration : <select id="cm-sel">${keys.map(k=>`<option value="${k}" ${k===cmKey?"selected":""}>${CV_INFO[k][0]}</option>`).join("")}</select></label>
+   <div id="cm-box" style="margin-top:10px;max-width:720px">${confusion(cmKey)}</div>
+   <div class="src">Source : <span id="cm-src">${cv[cmKey].fichier}</span></div></div>`;
+  const live=A.test_en_direct;
+  if(live){const R=live.data.reel||{}, S=live.data.simule||{};
+    const tbl=o=>`<table class="rt"><tr><th>Scénario</th><th>Accord</th><th>Chutes alertées</th><th>Fausses alertes</th><th>Changements détectés</th><th>Délai médian</th></tr>${Object.entries(o).map(([n,v])=>`<tr data-tt="<b>${n}</b><br>5 tirages · accord moyen ${pc(v.accord_moyen)}"><td>${n}</td><td><span class="inl" style="width:${v.accord_moyen*80}px"></span>${pc(v.accord_moyen)}</td><td>${v.chutes_alertees}</td><td>${v.fausses_alertes}</td><td>${v.changements_detectes}</td><td>${v.delai_median_s==null?"–":v.delai_median_s+" s"}</td></tr>`).join("")}</table>`;
+    h+=`<div class="res-card"><h2>3 · Test en direct sur des scénarios enchaînés</h2>
+     <p class="what">Modèle de test entraîné <b>sans</b> 30 prises mises de côté (9 assis, 10 chute, 8 debout, 3 marche). Ces prises sont découpées et enchaînées en scénarios, rejoués comme en direct (5 tirages par scénario). Rejouables un par un dans l'onglet « Test en direct ».</p>
+     <h3 style="font-size:13px;margin:6px 0">Source réelle</h3>${tbl(R)}
+     <details><summary>Source simulée (peu fiable : le simulateur ne distingue pas debout / assis)</summary><div style="margin-top:8px">${tbl(S)}</div></details>
+     <div class="src">Source : ${live.fichier} (calculé le ${live.date})</div></div>`;}
+  const fz=A.faisabilite, fi=A.faisabilite_synth_ideal;
+  if(fz){const ft=(d,n)=>`<table class="rt"><tr><th>${n}</th><th>B0 toujours debout</th><th>B1 squelette type de l'activité</th><th>Modèle CSI</th><th>B2 oracle</th></tr>${Object.entries(d["17 points"]).map(([g,v])=>`<tr class="${g==="TOUT"?"main":""}"><td>${g}</td><td>${v.B0_debout}</td><td>${v.B1_activite}</td><td>${v.modele_CSI}</td><td>${v.B2_oracle}</td></tr>`).join("")}</table>`;
+    h+=`<div class="res-card"><h2>4 · Faisabilité du squelette (SIMULATION, indication)</h2>
+     <p class="what">Erreur moyenne par articulation en mm (plus bas = mieux), 17 points, sur des séances simulées jamais vues. Si le modèle ne bat pas B1, le CSI n'apporte rien sur la posture au-delà de l'activité.</p>
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px">
+      <div><h3 style="font-size:13px;margin:0 0 6px">Acquisition actuelle (pertes, bruit)</h3>${ft(fz.data,"Activité")}<p class="what" style="margin-top:6px">Taille retrouvée : corrélation ${fz.data.taille_correlation} · phase du pas : ${pc(fz.data.phase_du_pas_juste_a_1_atome_pres)} (hasard ${pc(fz.data.phase_du_pas_hasard)})</p></div>
+      ${fi?`<div><h3 style="font-size:13px;margin:0 0 6px">Acquisition parfaite (0 perte)</h3>${ft(fi.data,"Activité")}<p class="what" style="margin-top:6px">Taille : corrélation ${fi.data.taille_correlation} · phase du pas : ${pc(fi.data.phase_du_pas_juste_a_1_atome_pres)} (hasard ${pc(fi.data.phase_du_pas_hasard)})</p></div>`:""}
+     </div><div class="src">Sources : ${fz.fichier}${fi?" · "+fi.fichier:""}</div></div>`;}
+  const lz=A.localisation_sim;
+  if(lz){h+=`<div class="res-card"><h2>5 · Localisation (SIMULATION, indication seulement)</h2>
+     <p class="what">Aucune donnée réelle ne contient de position : ceci n'est pas un résultat. Voir acquisition/METHODOLOGIE_MESURES.md pour la campagne qui permettra de mesurer.</p>
+     <table class="rt"><tr><th>Montage</th><th>Quadrants, même pièce</th><th>Quadrants, autre pièce</th><th>Cases 3×3, même pièce</th><th>Erreur médiane</th><th>Référence « au centre »</th></tr>
+     ${Object.entries(lz.data).map(([k,v])=>`<tr><td>${k.replaceAll("_"," ")}</td><td>${pc(v.zones_2x2.meme_piece)} <small style="color:var(--muted)">(hasard ${pc(v.zones_2x2.hasard)})</small></td><td>${pc(v.zones_2x2.autre_piece)}</td><td>${pc(v.zones_3x3.meme_piece)} <small style="color:var(--muted)">(hasard ${pc(v.zones_3x3.hasard)})</small></td><td>${v.position_erreur_m.mediane} m</td><td>${v.position_erreur_m.reference_toujours_au_centre} m</td></tr>`).join("")}</table>
+     <div class="src">Source : ${lz.fichier}</div></div>`;}
+  m.innerHTML=h;
+  document.getElementById("cm-sel").onchange=e=>{document.getElementById("cm-box").innerHTML=confusion(e.target.value);document.getElementById("cm-src").textContent=cv[e.target.value].fichier;};
+}
+// infobulle commune (barres, cases, lignes)
+document.addEventListener("mousemove",e=>{const tt=document.getElementById("tt");if(!tt)return;
+  const el=e.target.closest&&e.target.closest("[data-tt]");
+  if(!el||document.getElementById("res-main").hidden){tt.hidden=true;return;}
+  tt.innerHTML=el.dataset.tt;tt.hidden=false;
+  const w=tt.offsetWidth,hh=tt.offsetHeight;tt.style.left=Math.min(innerWidth-w-8,e.clientX+14)+"px";tt.style.top=Math.min(innerHeight-hh-8,e.clientY+14)+"px";});
 
 init().catch(e=>{document.getElementById("main").innerHTML=`<div class="card span2 empty err">Serveur injoignable : ${e.message}</div>`});
 </script>

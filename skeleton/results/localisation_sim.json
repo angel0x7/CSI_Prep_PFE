@@ -1,0 +1,36 @@
+{
+ "A_etoile_4_liens": {
+  "zones_2x2": {
+   "meme_piece": 0.573,
+   "autre_piece": 0.392,
+   "hasard": 0.25
+  },
+  "zones_3x3": {
+   "meme_piece": 0.31,
+   "autre_piece": 0.203,
+   "hasard": 0.111
+  },
+  "position_erreur_m": {
+   "mediane": 1.68,
+   "p80": 2.92,
+   "reference_toujours_au_centre": 2.58
+  }
+ },
+ "B_round_robin_20_liens": {
+  "zones_2x2": {
+   "meme_piece": 0.653,
+   "autre_piece": 0.358,
+   "hasard": 0.25
+  },
+  "zones_3x3": {
+   "meme_piece": 0.34,
+   "autre_piece": 0.174,
+   "hasard": 0.111
+  },
+  "position_erreur_m": {
+   "mediane": 1.82,
+   "p80": 2.92,
+   "reference_toujours_au_centre": 2.58
+  }
+ }
+}
